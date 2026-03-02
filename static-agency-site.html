@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STATIC — We Make Noise That Means Something</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --off-white: #f0ebe0;
+    --acid: #c8ff00;
+    --red: #ff2d2d;
+    --mid: #141414;
+    --border: #222;
+    --muted: #444;
+    --text-dim: #888;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'Instrument Serif', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--acid);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor.expand { width: 40px; height: 40px; }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  nav.scrolled {
+    border-color: var(--border);
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--off-white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--acid); }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--acid); }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--black);
+    background: var(--acid);
+    padding: 10px 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--off-white); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated static lines */
+  .static-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .static-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: rgba(200,255,0,0.06);
+    animation: staticFlicker var(--dur) infinite;
+  }
+  @keyframes staticFlicker {
+    0%, 100% { opacity: 0; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(var(--shift)); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 13vw, 200px);
+    line-height: 0.9;
+    letter-spacing: -1px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+  .hero-title .line-2 { color: var(--acid); }
+  .hero-title .line-3 {
+    -webkit-text-stroke: 1px var(--off-white);
+    color: transparent;
+  }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+  .hero-desc {
+    font-size: clamp(15px, 1.5vw, 19px);
+    color: var(--text-dim);
+    max-width: 440px;
+    line-height: 1.8;
+    font-style: italic;
+  }
+  .hero-desc strong { color: var(--off-white); font-style: normal; }
+
+  .hero-scroll {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .scroll-line {
+    width: 60px; height: 1px;
+    background: var(--muted);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--acid);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0% { left: -100%; } 100% { left: 100%; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    overflow: hidden;
+    background: var(--mid);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: marqueeScroll 25s linear infinite;
+  }
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 32px;
+    padding-right: 64px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .marquee-dot { color: var(--acid); font-size: 16px; }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION WRAPPER */
+  section { padding: 120px 48px; }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--acid);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 100px);
+    line-height: 0.95;
+    letter-spacing: 0.5px;
+    margin-bottom: 64px;
+  }
+
+  /* TWO COLUMN MANIFESTO */
+  .manifesto {
+    background: var(--mid);
+    border-top: 1px solid var(--border);
+  }
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+  }
+  .manifesto-col {
+    background: var(--black);
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto-col::before {
+    content: attr(data-num);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 180px;
+    color: rgba(200,255,0,0.03);
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .manifesto-col h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    color: var(--acid);
+  }
+  .manifesto-col .col-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .manifesto-col p {
+    font-size: 17px;
+    line-height: 1.85;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
+  .manifesto-col p strong { color: var(--off-white); }
+  .manifesto-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .manifesto-col ul li {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #777;
+    padding-left: 20px;
+    border-left: 2px solid var(--border);
+    line-height: 1.6;
+    transition: all 0.2s;
+  }
+  .manifesto-col ul li:hover {
+    color: var(--off-white);
+    border-left-color: var(--acid);
+    padding-left: 24px;
+  }
+
+  /* SIGNAL / ARTICLES */
+  .signal { border-top: 1px solid var(--border); }
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2px;
+    background: var(--border);
+  }
+  .article-main {
+    background: var(--black);
+    padding: 48px;
+    cursor: pointer;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .article-main:hover { background: #0f0f0f; }
+  .article-main::after {
+    content: '→';
+    position: absolute;
+    bottom: 48px; right: 48px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--acid);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.25s;
+  }
+  .article-main:hover::after { opacity: 1; transform: translateX(0); }
+  .article-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .article-main h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .article-sub {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+  .article-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .articles-side {
+    background: var(--mid);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .article-side-item {
+    background: var(--black);
+    padding: 32px;
+    flex: 1;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .article-side-item:hover {
+    background: #0f0f0f;
+    border-left-color: var(--acid);
+  }
+  .side-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .side-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: #777;
+  }
+  .side-note {
+    font-size: 13px;
+    color: #444;
+    font-style: italic;
+  }
+
+  /* SERVICES */
+  .services { border-top: 1px solid var(--border); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+  }
+  .service-card {
+    background: var(--black);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+  .service-card:hover { background: #0f0f0f; }
+  .service-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--acid);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .service-card p {
+    font-size: 15px;
+    color: #777;
+    line-height: 1.8;
+  }
+  .service-card p strong { color: var(--off-white); }
+  .service-footer {
+    margin-top: 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--acid);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .service-footer::before {
+    content: '';
+    display: block;
+    width: 20px; height: 1px;
+    background: var(--acid);
+  }
+
+  /* ABOUT */
+  .about {
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-left {}
+  .about-statement {
+    font-size: clamp(20px, 2.5vw, 28px);
+    line-height: 1.65;
+    color: #aaa;
+    margin-bottom: 40px;
+  }
+  .about-statement strong { color: var(--off-white); }
+  .about-statement em { color: var(--acid); font-style: normal; }
+  .about-values {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .value-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--mid);
+    border-left: 3px solid var(--border);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .value-row:hover {
+    border-left-color: var(--acid);
+    background: #181818;
+  }
+  .value-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .value-note {
+    font-size: 13px;
+    color: #444;
+    font-style: italic;
+    text-align: right;
+  }
+  .about-right {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .manifesto-quote {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.95;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,255,0,0.3);
+    letter-spacing: 1px;
+  }
+  .manifesto-quote span {
+    -webkit-text-stroke: 0;
+    color: var(--acid);
+  }
+  .about-note {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    font-style: italic;
+    border-left: 2px solid var(--border);
+    padding-left: 20px;
+  }
+
+  /* CTA */
+  .cta-section {
+    border-top: 1px solid var(--border);
+    background: var(--acid);
+    padding: 100px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 48px;
+  }
+  .cta-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.95;
+    color: var(--black);
+    margin-bottom: 16px;
+  }
+  .cta-left p {
+    font-size: 17px;
+    color: rgba(0,0,0,0.6);
+    max-width: 440px;
+    line-height: 1.7;
+  }
+  .cta-right { display: flex; flex-direction: column; gap: 16px; }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 20px 40px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .cta-btn-primary {
+    background: var(--black);
+    color: var(--acid);
+  }
+  .cta-btn-primary:hover { background: #1a1a1a; }
+  .cta-btn-secondary {
+    background: transparent;
+    color: var(--black);
+    border: 1px solid rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  .cta-btn-secondary:hover { background: rgba(0,0,0,0.08); }
+  .cta-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(0,0,0,0.4);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--off-white);
+  }
+  .footer-logo span { color: var(--acid); }
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--acid); }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #333;
+    letter-spacing: 1px;
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 0 24px 60px; }
+    .manifesto-grid { grid-template-columns: 1fr; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+    .cta-section { padding: 60px 24px; }
+    footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+    .footer-links { flex-wrap: wrap; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">STAT<span>I</span>C</a>
+  <ul class="nav-links">
+    <li><a href="#signal">Signal</a></li>
+    <li><a href="#services">Work</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <a href="#consult" class="nav-cta">Free Audit →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="static-bg" id="staticBg"></div>
+
+  <div class="hero-eyebrow">// Thunder Bay · Est. 2025 · Marketing That Stays With You</div>
+
+  <h1 class="hero-title">
+    <div>WE MAKE</div>
+    <div class="line-2">NOISE THAT</div>
+    <div class="line-3">MEANS SOMETHING.</div>
+  </h1>
+
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      Most brands are trying to be <strong>seen</strong>.<br>
+      We're building brands that are <strong>remembered</strong>.<br>
+      There's a difference. It lives in the static.
+    </p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll to tune in
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Brand Strategy <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Local Business Teardowns <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Memory Over Beauty <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Free Brand Audits <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Social Strategy <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">The Signal Series <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Anti-Greyscale Marketing <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Brand Strategy <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Local Business Teardowns <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Memory Over Beauty <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Free Brand Audits <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Social Strategy <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">The Signal Series <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Anti-Greyscale Marketing <span class="marquee-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- MANIFESTO / TWO COLUMNS -->
+<section class="manifesto" id="manifesto">
+  <div class="section-tag">// 01 — The Position</div>
+  <h2 class="section-title">WHY WE<br>EXIST</h2>
+  <div class="manifesto-grid">
+    <div class="manifesto-col" data-num="01">
+      <h3>What We Aim To Do</h3>
+      <div class="col-sub">Our mission, plainly stated</div>
+      <p>We study brands the way a critic studies film — with <strong>genuine obsession and zero sentimentality.</strong> We look for what's invisible, what's working underneath the surface, and what's quietly leaking value.</p>
+      <p>Then we say it out loud. Clearly. Without softening it to protect feelings.</p>
+      <ul>
+        <li>Identify what your brand actually communicates vs. what you think it does</li>
+        <li>Find the gap between the audience you have and the audience you deserve</li>
+        <li>Build marketing that leaves a mark, not just an impression</li>
+        <li>Tell you the thing your last agency was afraid to say</li>
+      </ul>
+    </div>
+    <div class="manifesto-col" data-num="02">
+      <h3>What Brands Should Do</h3>
+      <div class="col-sub">The uncomfortable truth</div>
+      <p>Your brand narrative is not yours to ignore. <strong>The market will write it for you</strong> the moment you stop. And the version they write is rarely flattering.</p>
+      <p>Brands that last don't just respond to culture — they <strong>move before it does.</strong> That takes nerve, not just a content calendar.</p>
+      <ul>
+        <li>Stop optimising for reach and start optimising for recall</li>
+        <li>Own a feeling, not just a category</li>
+        <li>Let your actual point of view show — audiences can smell the absence of one</li>
+        <li>Treat every touchpoint as a vote for what your brand believes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNAL — ARTICLES -->
+<section class="signal" id="signal">
+  <div class="section-tag">// 02 — The Signal Series</div>
+  <h2 class="section-title">LOCAL BRANDS.<br>SHARP EYES.</h2>
+  <div class="articles-grid">
+    <div class="article-main">
+      <div class="article-tag">Issue 001 · Thunder Bay · Bar & Eatery</div>
+      <h3>The City You Forgot You Wanted</h3>
+      <p class="article-sub">How Pocketchange built the bar Thunder Bay didn't know it was waiting for — and why the gap between their brand and their crowd is the most interesting thing about them.</p>
+      <div class="article-meta">MAR 2025 · BRAND BREAKDOWN · 6 MIN READ</div>
+    </div>
+    <div class="articles-side">
+      <div class="article-side-item">
+        <div class="side-label">Coming Soon · Issue 002</div>
+        <div class="side-title">Your Favourite Local Restaurant Doesn't Know What It Is</div>
+        <div class="side-note">On identity confusion in hospitality.</div>
+      </div>
+      <div class="article-side-item">
+        <div class="side-label">Coming Soon · Issue 003</div>
+        <div class="side-title">The Social Media Trap Every Small Business Falls Into</div>
+        <div class="side-note">Consistency without direction is just noise.</div>
+      </div>
+      <div class="article-side-item" style="background:rgba(200,255,0,0.04);border-left:3px solid rgba(200,255,0,0.3);">
+        <div class="side-label" style="color:var(--acid)">Want your brand in The Signal?</div>
+        <div class="side-title" style="color:var(--off-white);font-size:18px;">We write about brands we find interesting. Reach out.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-tag">// 03 — How We Can Help</div>
+  <h2 class="section-title">THE WORK</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01 ——</div>
+      <h3>Brand Audit</h3>
+      <p>A 30-minute session where we look at your brand with <strong>completely honest eyes.</strong> What you're saying. What you're not. What the market is probably hearing instead.</p>
+      <p>No sales pitch. No agenda. Just the read.</p>
+      <div class="service-footer">Free to start</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02 ——</div>
+      <h3>Brand Strategy</h3>
+      <p>For businesses that know something is off but can't name it. We <strong>diagnose the disconnect</strong> between who you are, who you say you are, and who your audience thinks you are.</p>
+      <p>Then we build the bridge.</p>
+      <div class="service-footer">Let's talk scope</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03 ——</div>
+      <h3>Social & Content</h3>
+      <p>Content that doesn't just look good in the grid. Content that <strong>makes people stop, think, and remember.</strong> Built around a genuine point of view — not a posting schedule.</p>
+      <p>Memory over beauty. Always.</p>
+      <div class="service-footer">Let's talk scope</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left">
+    <div class="section-tag">// 04 — About Static</div>
+    <p class="about-statement">
+      We're a small team with a <strong>disproportionately large opinion</strong> about what marketing should be doing — and almost never is.<br><br>
+      We believe most brands are beautiful and <em>forgettable</em>. We're here to fix the second part.<br><br>
+      Based in Thunder Bay. Thinking about everywhere else.
+    </p>
+    <div class="about-values">
+      <div class="value-row">
+        <span class="value-name">Memory > Beauty</span>
+        <span class="value-note">What sticks matters more than what shines</span>
+      </div>
+      <div class="value-row">
+        <span class="value-name">Narrative Control</span>
+        <span class="value-note">Your story gets told either way</span>
+      </div>
+      <div class="value-row">
+        <span class="value-name">Radical Candour</span>
+        <span class="value-note">We say the thing</span>
+      </div>
+      <div class="value-row">
+        <span class="value-name">Specificity Wins</span>
+        <span class="value-note">Niche deeper than you think you should</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-right">
+    <div class="manifesto-quote">
+      GREY IS FOR<br><span>GRAVE</span>STONES.
+    </div>
+    <p class="about-note">
+      Every brand exists in a cultural moment. Most are too scared to acknowledge it. We think that's where all the interesting work lives — in the static between what a brand says and what the world actually needs to hear.
+    </p>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="consult">
+  <div class="cta-left">
+    <h2>LET'S FIND<br>YOUR SIGNAL.</h2>
+    <p>Book a free 30-minute brand audit. No pitch, no invoice. Just an honest look at where you are and what's possible. We're building our portfolio — you get real thinking for free.</p>
+  </div>
+  <div class="cta-right">
+    <a href="mailto:hello@static-agency.com" class="cta-btn cta-btn-primary">Book Free Audit →</a>
+    <a href="mailto:hello@static-agency.com" class="cta-btn cta-btn-secondary">Just Say Hello</a>
+    <div class="cta-note">hello@static-agency.com</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">STAT<span>I</span>C</div>
+  <ul class="footer-links">
+    <li><a href="#signal">Signal Series</a></li>
+    <li><a href="#services">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#consult">Free Audit</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Static. Thunder Bay, ON.</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .article-main, .service-card, .value-row, .pillar, .manifesto-col ul li').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+  });
+
+  // Scrolled nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Static lines in hero
+  const bg = document.getElementById('staticBg');
+  for (let i = 0; i < 20; i++) {
+    const line = document.createElement('div');
+    line.className = 'static-line';
+    line.style.top = Math.random() * 100 + '%';
+    line.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
+    line.style.setProperty('--shift', (Math.random() * 20 - 10) + 'px');
+    line.style.animationDelay = (Math.random() * 4) + 's';
+    bg.appendChild(line);
+  }
+</script>
+</body>
+</html>
