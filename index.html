@@ -19,7 +19,9 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--off-white); font-family: 'Instrument Serif', serif; overflow-x: hidden; cursor: none; }
-  .cursor { position: fixed; width: 12px; height: 12px; background: var(--acid); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.25s ease, height 0.25s ease, background 0.25s ease; }
+  * { cursor: none !important; }
+  .cursor { position: fixed; width: 12px; height: 12px; background: var(--acid); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease; opacity: 0; top: -20px; left: -20px; }
+  .cursor.visible { opacity: 1; }
   .cursor.expand { width: 36px; height: 36px; background: transparent; border: 2px solid var(--acid); }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9990; opacity: 0.5; }
 
@@ -539,7 +541,8 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
 // ============================================================
 // CASE STUDIES
 // ============================================================
@@ -810,7 +813,24 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeArtic
 
 // Cursor
 const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', e => { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; });
-document.querySelectorAll('a,button,.article-card,.service-card,.value-row,.signal-cta,.work-card,.work-card-wide').forEach(el => {
+let mouseX = -20, mouseY = -20;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+  cursor.classList.add('visible');
+});
+
+document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
+document.addEventListener('mouseenter', () => cursor.classList.add('visible'));
+
+document.querySelectorAll('a, button, .article-card, .service-card, .value-row, .signal-cta, .work-card, .work-card-wide').forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
-  el.addEventListener('mouseleave'
+  el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+});
+}); // end DOMContentLoaded
+</script>
+</body>
+</html>
