@@ -1,0 +1,10 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "index, follow"
+
+[build]
+  publish = "."
+
+[[plugins]]
+# Disable Cloudflare email obfuscation that injects scripts and breaks JS
