@@ -38,188 +38,227 @@
   .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 48px 80px; position: relative; overflow: hidden; }
   .static-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
   .static-line { position: absolute; left: 0; right: 0; height: 1px; background: rgba(200,255,0,0.06); animation: staticFlicker var(--dur) infinite; }
-  @keyframes staticFlicker { 0%, 100% { opacity: 0; } 50% { opacity: 1; transform: translateY(var(--shift)); } }
+  @keyframes staticFlicker { 0%,100%{opacity:0} 50%{opacity:1;transform:translateY(var(--shift))} }
   .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 4px; color: var(--acid); text-transform: uppercase; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards; }
   .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(80px, 13vw, 200px); line-height: 0.9; margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards; }
   .hero-title .line-2 { color: var(--acid); }
   .hero-title .line-3 { -webkit-text-stroke: 1px var(--off-white); color: transparent; }
   .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 32px; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
-  .hero-desc { font-size: clamp(15px, 1.5vw, 19px); color: #ccc; max-width: 440px; line-height: 1.8; font-style: italic; }
+  .hero-desc { font-size: clamp(15px,1.5vw,19px); color: #ccc; max-width: 440px; line-height: 1.8; font-style: italic; }
   .hero-desc strong { color: var(--off-white); font-style: normal; }
   .hero-scroll { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #bbb; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
   .scroll-line { width: 60px; height: 1px; background: var(--muted); position: relative; overflow: hidden; }
-  .scroll-line::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--acid); animation: scrollPulse 2s ease infinite; }
-  @keyframes scrollPulse { 0% { left: -100%; } 100% { left: 100%; } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .scroll-line::after { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:var(--acid); animation: scrollPulse 2s ease infinite; }
+  @keyframes scrollPulse { 0%{left:-100%} 100%{left:100%} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
   /* MARQUEE */
-  .marquee-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 16px 0; overflow: hidden; background: var(--mid); }
-  .marquee-track { display: flex; white-space: nowrap; animation: marqueeScroll 25s linear infinite; }
-  .marquee-item { display: inline-flex; align-items: center; gap: 32px; padding-right: 64px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #bbb; }
-  .marquee-dot { color: var(--acid); font-size: 16px; }
-  @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-wrap { border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:16px 0; overflow:hidden; background:var(--mid); }
+  .marquee-track { display:flex; white-space:nowrap; animation: marqueeScroll 25s linear infinite; }
+  .marquee-item { display:inline-flex; align-items:center; gap:32px; padding-right:64px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#bbb; }
+  .marquee-dot { color:var(--acid); font-size:16px; }
+  @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-  /* SECTIONS */
   section { padding: 120px 48px; }
-  .section-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; color: var(--acid); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; }
-  .section-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--acid); }
-  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 100px); line-height: 0.95; margin-bottom: 64px; }
+  .section-tag { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:4px; color:var(--acid); text-transform:uppercase; margin-bottom:20px; display:flex; align-items:center; gap:16px; }
+  .section-tag::before { content:''; display:block; width:32px; height:1px; background:var(--acid); }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,7vw,100px); line-height:0.95; margin-bottom:64px; }
 
   /* MANIFESTO */
-  .manifesto { background: var(--mid); border-top: 1px solid var(--border); }
-  .manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
-  .manifesto-col { background: var(--black); padding: 56px 48px; position: relative; overflow: hidden; }
-  .manifesto-col::before { content: attr(data-num); font-family: 'Bebas Neue', sans-serif; font-size: 180px; color: rgba(200,255,0,0.03); position: absolute; bottom: -20px; right: -10px; line-height: 1; pointer-events: none; }
-  .manifesto-col h3 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; margin-bottom: 8px; color: var(--acid); }
-  .manifesto-col .col-sub { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #777; text-transform: uppercase; margin-bottom: 32px; }
-  .manifesto-col p { font-size: 17px; line-height: 1.85; color: #ccc; margin-bottom: 20px; }
-  .manifesto-col p strong { color: var(--off-white); }
-  .manifesto-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .manifesto-col ul li { font-family: 'DM Mono', monospace; font-size: 13px; color: #aaa; padding-left: 20px; border-left: 2px solid var(--border); line-height: 1.6; transition: all 0.2s; }
-  .manifesto-col ul li:hover { color: var(--off-white); border-left-color: var(--acid); padding-left: 24px; }
+  .manifesto { background:var(--mid); border-top:1px solid var(--border); }
+  .manifesto-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); }
+  .manifesto-col { background:var(--black); padding:56px 48px; position:relative; overflow:hidden; }
+  .manifesto-col::before { content:attr(data-num); font-family:'Bebas Neue',sans-serif; font-size:180px; color:rgba(200,255,0,0.03); position:absolute; bottom:-20px; right:-10px; line-height:1; pointer-events:none; }
+  .manifesto-col h3 { font-family:'Bebas Neue',sans-serif; font-size:32px; margin-bottom:8px; color:var(--acid); }
+  .manifesto-col .col-sub { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#777; text-transform:uppercase; margin-bottom:32px; }
+  .manifesto-col p { font-size:17px; line-height:1.85; color:#ccc; margin-bottom:20px; }
+  .manifesto-col p strong { color:var(--off-white); }
+  .manifesto-col ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .manifesto-col ul li { font-family:'DM Mono',monospace; font-size:13px; color:#aaa; padding-left:20px; border-left:2px solid var(--border); line-height:1.6; transition:all 0.2s; }
+  .manifesto-col ul li:hover { color:var(--off-white); border-left-color:var(--acid); padding-left:24px; }
 
   /* SIGNAL */
-  .signal { border-top: 1px solid var(--border); }
-  .signal-intro { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
-  .signal-intro .section-title { margin-bottom: 0; }
-  .signal-tagline { font-size: 15px; font-style: italic; color: #bbb; max-width: 340px; line-height: 1.7; text-align: right; }
-  .signal-tagline strong { color: var(--off-white); font-style: normal; }
-  .signal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); margin-top: 48px; }
-  .article-card { background: var(--black); padding: 40px; position: relative; overflow: hidden; cursor: pointer; transition: background 0.25s; display: flex; flex-direction: column; gap: 16px; min-height: 340px; }
-  .article-card:hover { background: #0f0f0f; }
-  .article-card::after { content: '→'; position: absolute; bottom: 40px; right: 40px; font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--acid); opacity: 0; transform: translateX(-8px); transition: all 0.25s; }
-  .article-card:hover::after { opacity: 1; transform: translateX(0); }
-  .article-card.featured { grid-column: span 2; min-height: 420px; }
-  .card-issue { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--acid); text-transform: uppercase; }
-  .card-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #888; text-transform: uppercase; }
-  .article-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 3vw, 42px); line-height: 1; color: var(--off-white); flex: 1; }
-  .article-card.featured h3 { font-size: clamp(36px, 4vw, 56px); }
-  .article-card p { font-size: 14px; font-style: italic; color: #bbb; line-height: 1.7; }
-  .card-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: #777; letter-spacing: 1px; margin-top: auto; }
-  .signal-cta { background: rgba(200,255,0,0.04); border: 1px solid rgba(200,255,0,0.15); display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 40px; cursor: pointer; transition: all 0.2s; min-height: 340px; }
-  .signal-cta:hover { background: rgba(200,255,0,0.08); }
-  .signal-cta-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--acid); text-transform: uppercase; }
-  .signal-cta h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; line-height: 1.1; color: var(--off-white); }
-  .signal-cta p { font-size: 13px; color: #888; font-style: italic; }
+  .signal { border-top:1px solid var(--border); }
+  .signal-intro { display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; }
+  .signal-intro .section-title { margin-bottom:0; }
+  .signal-tagline { font-size:15px; font-style:italic; color:#bbb; max-width:340px; line-height:1.7; text-align:right; }
+  .signal-tagline strong { color:var(--off-white); font-style:normal; }
+  .signal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); margin-top:48px; }
+  .article-card { background:var(--black); padding:40px; position:relative; overflow:hidden; cursor:pointer; transition:background 0.25s; display:flex; flex-direction:column; gap:16px; min-height:340px; }
+  .article-card:hover { background:#0f0f0f; }
+  .article-card::after { content:'→'; position:absolute; bottom:40px; right:40px; font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--acid); opacity:0; transform:translateX(-8px); transition:all 0.25s; }
+  .article-card:hover::after { opacity:1; transform:translateX(0); }
+  .article-card.featured { grid-column:span 2; min-height:420px; }
+  .card-issue { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:var(--acid); text-transform:uppercase; }
+  .card-tag { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#888; text-transform:uppercase; }
+  .article-card h3 { font-family:'Bebas Neue',sans-serif; font-size:clamp(28px,3vw,42px); line-height:1; color:var(--off-white); flex:1; }
+  .article-card.featured h3 { font-size:clamp(36px,4vw,56px); }
+  .article-card p { font-size:14px; font-style:italic; color:#bbb; line-height:1.7; }
+  .card-meta { font-family:'DM Mono',monospace; font-size:10px; color:#777; letter-spacing:1px; margin-top:auto; }
+  .signal-cta { background:rgba(200,255,0,0.04); border:1px solid rgba(200,255,0,0.15); display:flex; flex-direction:column; justify-content:center; gap:12px; padding:40px; cursor:pointer; transition:all 0.2s; min-height:340px; }
+  .signal-cta:hover { background:rgba(200,255,0,0.08); }
+  .signal-cta-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:var(--acid); text-transform:uppercase; }
+  .signal-cta h3 { font-family:'Bebas Neue',sans-serif; font-size:28px; line-height:1.1; color:var(--off-white); }
+  .signal-cta p { font-size:13px; color:#888; font-style:italic; }
 
-  /* ARTICLE OVERLAY */
-  .article-overlay { display: none; position: fixed; inset: 0; background: var(--black); z-index: 200; overflow-y: auto; }
-  .article-overlay.open { display: block; }
-  .article-overlay-inner { max-width: 720px; margin: 0 auto; padding: 120px 48px 80px; }
-  .article-back { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: #bbb; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 12px; margin-bottom: 64px; background: none; border: none; transition: color 0.2s; }
-  .article-back:hover { color: var(--acid); }
-  .article-overlay-issue { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; color: var(--acid); text-transform: uppercase; margin-bottom: 16px; }
-  .article-overlay h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 88px); line-height: 0.95; margin-bottom: 24px; }
-  .article-overlay-sub { font-size: 19px; font-style: italic; color: #bbb; line-height: 1.7; margin-bottom: 16px; }
-  .article-overlay-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: #777; letter-spacing: 1px; margin-bottom: 64px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
-  .article-overlay-body h2 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; margin: 48px 0 16px; color: var(--off-white); }
-  .article-overlay-body p { font-size: 17px; line-height: 1.9; color: #ccc; margin-bottom: 24px; }
-  .article-overlay-body p strong { color: var(--off-white); }
-  .article-overlay-body p em { color: var(--acid); font-style: normal; }
-  .article-overlay-body ul { list-style: none; margin: 24px 0; display: flex; flex-direction: column; gap: 12px; }
-  .article-overlay-body ul li { font-size: 16px; color: #bbb; line-height: 1.7; padding-left: 24px; border-left: 2px solid var(--border); }
-  .article-tagline { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--acid); margin: 48px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 24px 0; }
+  /* SHARED OVERLAY */
+  .overlay { display:none; position:fixed; inset:0; background:var(--black); z-index:200; overflow-y:auto; }
+  .overlay.open { display:block; }
+  .overlay-inner { max-width:800px; margin:0 auto; padding:100px 48px 80px; }
+  .overlay-back { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:#bbb; text-transform:uppercase; cursor:pointer; display:inline-flex; align-items:center; gap:12px; margin-bottom:64px; background:none; border:none; transition:color 0.2s; }
+  .overlay-back:hover { color:var(--acid); }
 
-  /* WORK / CASE STUDIES */
-  .work { border-top: 1px solid var(--border); background: var(--mid); }
-  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
-  .work-card { background: var(--black); padding: 48px; position: relative; overflow: hidden; transition: background 0.25s; }
-  .work-card:hover { background: #0e0e0e; }
-  .work-card-full { grid-column: span 2; background: var(--black); padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; border-top: 2px solid var(--border); }
-  .work-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--warm); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
-  .work-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 42px; line-height: 1; margin-bottom: 12px; color: var(--off-white); }
-  .work-card-full h3 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; line-height: 1; margin-bottom: 16px; }
-  .work-type { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #888; text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-  .work-type::before { content: ''; display: block; width: 20px; height: 1px; background: var(--warm); }
-  .work-desc { font-size: 15px; color: #ccc; line-height: 1.8; margin-bottom: 28px; }
-  .work-desc strong { color: var(--off-white); }
-  .work-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .work-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--warm); border: 1px solid rgba(255,140,66,0.3); padding: 5px 12px; text-transform: uppercase; transition: all 0.2s; }
-  .work-card:hover .work-tag { border-color: rgba(255,140,66,0.6); }
-  .work-accent { font-family: 'Bebas Neue', sans-serif; font-size: 120px; color: rgba(255,140,66,0.04); position: absolute; bottom: -16px; right: 16px; line-height: 1; pointer-events: none; }
-  .work-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .work-stat { padding: 20px; background: rgba(255,140,66,0.05); border-left: 3px solid rgba(255,140,66,0.3); }
-  .work-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--warm); line-height: 1; margin-bottom: 4px; }
-  .work-stat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+  /* ARTICLE STYLES */
+  .article-overlay-issue { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:4px; color:var(--acid); text-transform:uppercase; margin-bottom:16px; }
+  #articleOverlay h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,8vw,88px); line-height:0.95; margin-bottom:24px; }
+  .article-overlay-sub { font-size:19px; font-style:italic; color:#bbb; line-height:1.7; margin-bottom:16px; }
+  .article-overlay-meta { font-family:'DM Mono',monospace; font-size:10px; color:#777; letter-spacing:1px; margin-bottom:64px; padding-bottom:40px; border-bottom:1px solid var(--border); }
+  .article-body h2 { font-family:'Bebas Neue',sans-serif; font-size:32px; margin:48px 0 16px; }
+  .article-body p { font-size:17px; line-height:1.9; color:#ccc; margin-bottom:24px; }
+  .article-body p strong { color:var(--off-white); }
+  .article-body p em { color:var(--acid); font-style:normal; }
+  .article-body ul { list-style:none; margin:24px 0; display:flex; flex-direction:column; gap:12px; }
+  .article-body ul li { font-size:16px; color:#bbb; line-height:1.7; padding-left:24px; border-left:2px solid var(--border); }
+  .article-tagline { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--acid); margin:48px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:24px 0; }
+
+  /* CASE STUDY STYLES */
+  .cs-eyebrow { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:4px; color:var(--warm); text-transform:uppercase; margin-bottom:16px; }
+  #caseStudyOverlay h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(60px,9vw,110px); line-height:0.88; margin-bottom:24px; }
+  .cs-subtitle { font-size:19px; font-style:italic; color:#bbb; line-height:1.7; max-width:640px; margin-bottom:32px; }
+  .cs-meta-row { display:flex; gap:40px; flex-wrap:wrap; padding:28px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:56px; }
+  .cs-meta-item {}
+  .cs-meta-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:3px; color:#555; text-transform:uppercase; margin-bottom:6px; }
+  .cs-meta-value { font-family:'DM Mono',monospace; font-size:12px; color:#ccc; }
+  .cs-intro { font-size:20px; color:#ccc; line-height:1.8; margin-bottom:64px; padding-left:28px; border-left:3px solid var(--warm); font-style:italic; }
+  .cs-block { margin-bottom:64px; }
+  .cs-block-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:4px; color:var(--warm); text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+  .cs-block-label::before { content:''; display:block; width:24px; height:1px; background:var(--warm); }
+  .cs-block h2 { font-family:'Bebas Neue',sans-serif; font-size:40px; line-height:1; margin-bottom:24px; }
+  .cs-block p { font-size:16px; line-height:1.85; color:#ccc; margin-bottom:16px; }
+  .cs-block p strong { color:var(--off-white); }
+  .cs-list { list-style:none; display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+  .cs-list li { font-size:15px; color:#ccc; line-height:1.75; padding:18px 22px; background:rgba(255,140,66,0.05); border-left:3px solid rgba(255,140,66,0.35); transition:all 0.2s; }
+  .cs-list li:hover { background:rgba(255,140,66,0.09); border-left-color:var(--warm); padding-left:28px; }
+  .cs-list li strong { color:var(--off-white); }
+  .cs-divider { height:1px; background:var(--border); margin:48px 0; }
+  .cs-tags { display:flex; flex-wrap:wrap; gap:8px; margin:32px 0; }
+  .cs-tag { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; color:var(--warm); border:1px solid rgba(255,140,66,0.3); padding:6px 14px; text-transform:uppercase; }
+  .cs-closing { padding:36px; background:rgba(255,140,66,0.06); border:1px solid rgba(255,140,66,0.18); margin-top:48px; }
+  .cs-closing-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:var(--warm); text-transform:uppercase; margin-bottom:14px; }
+  .cs-closing p { font-size:16px; color:#ccc; line-height:1.8; }
+  .cs-closing p strong { color:var(--off-white); }
+  .cs-nav { display:flex; justify-content:space-between; align-items:center; margin-top:64px; padding-top:40px; border-top:1px solid var(--border); gap:16px; flex-wrap:wrap; }
+  .cs-nav-btn { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; background:none; border:1px solid var(--border); color:#bbb; padding:14px 24px; cursor:pointer; transition:all 0.2s; }
+  .cs-nav-btn:hover { color:var(--acid); border-color:var(--acid); }
+
+  /* WORK SECTION */
+  .work { border-top:1px solid var(--border); background:var(--mid); }
+  .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); }
+  .work-card { background:var(--black); padding:48px; position:relative; overflow:hidden; cursor:pointer; transition:background 0.25s; }
+  .work-card:hover { background:#0d0d0d; }
+  .work-card:hover .work-open { color:var(--acid); border-color:var(--acid); letter-spacing:3px; }
+  .work-card-wide { grid-column:span 2; background:var(--black); padding:48px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; cursor:pointer; transition:background 0.25s; }
+  .work-card-wide:hover { background:#0d0d0d; }
+  .work-card-wide:hover .work-open { color:var(--acid); border-color:var(--acid); letter-spacing:3px; }
+  .work-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--warm); letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; }
+  .work-card h3, .work-card-wide h3 { font-family:'Bebas Neue',sans-serif; font-size:44px; line-height:1; margin-bottom:12px; }
+  .work-card-wide h3 { font-size:52px; }
+  .work-type { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#888; text-transform:uppercase; margin-bottom:24px; display:flex; align-items:center; gap:12px; }
+  .work-type::before { content:''; display:block; width:20px; height:1px; background:var(--warm); }
+  .work-desc { font-size:15px; color:#ccc; line-height:1.8; margin-bottom:28px; }
+  .work-desc strong { color:var(--off-white); }
+  .work-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:32px; }
+  .work-tag { font-family:'DM Mono',monospace; font-size:10px; color:var(--warm); border:1px solid rgba(255,140,66,0.3); padding:5px 12px; text-transform:uppercase; letter-spacing:1px; }
+  .work-accent { font-family:'Bebas Neue',sans-serif; font-size:130px; color:rgba(255,140,66,0.04); position:absolute; bottom:-20px; right:12px; line-height:1; pointer-events:none; }
+  .work-open { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:#666; border:1px solid #333; padding:10px 18px; display:inline-block; text-transform:uppercase; transition:all 0.3s; }
+  .work-stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .work-stat { padding:20px; background:rgba(255,140,66,0.05); border-left:3px solid rgba(255,140,66,0.3); }
+  .work-stat-num { font-family:'Bebas Neue',sans-serif; font-size:38px; color:var(--warm); line-height:1; margin-bottom:4px; }
+  .work-stat-label { font-family:'DM Mono',monospace; font-size:10px; color:#888; letter-spacing:1px; text-transform:uppercase; }
 
   /* SERVICES */
-  .services { border-top: 1px solid var(--border); }
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
-  .service-card { background: var(--black); padding: 48px 40px; transition: background 0.25s; position: relative; overflow: hidden; }
-  .service-card:hover { background: #0f0f0f; }
-  .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--acid); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
-  .service-card:hover::after { transform: scaleX(1); }
-  .service-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--acid); letter-spacing: 2px; margin-bottom: 32px; }
-  .service-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; margin-bottom: 16px; line-height: 1; }
-  .service-card p { font-size: 15px; color: #ccc; line-height: 1.8; margin-bottom: 16px; }
-  .service-card p strong { color: var(--off-white); }
-  .service-footer { margin-top: 32px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--acid); display: flex; align-items: center; gap: 8px; }
-  .service-footer::before { content: ''; display: block; width: 20px; height: 1px; background: var(--acid); }
+  .services { border-top:1px solid var(--border); }
+  .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); }
+  .service-card { background:var(--black); padding:48px 40px; transition:background 0.25s; position:relative; overflow:hidden; }
+  .service-card:hover { background:#0f0f0f; }
+  .service-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--acid); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+  .service-card:hover::after { transform:scaleX(1); }
+  .service-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--acid); letter-spacing:2px; margin-bottom:32px; }
+  .service-card h3 { font-family:'Bebas Neue',sans-serif; font-size:36px; margin-bottom:16px; line-height:1; }
+  .service-card p { font-size:15px; color:#ccc; line-height:1.8; margin-bottom:16px; }
+  .service-card p strong { color:var(--off-white); }
+  .service-footer { margin-top:32px; font-family:'DM Mono',monospace; font-size:11px; color:var(--acid); display:flex; align-items:center; gap:8px; }
+  .service-footer::before { content:''; display:block; width:20px; height:1px; background:var(--acid); }
 
   /* ABOUT */
-  .about { border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .about-statement { font-size: clamp(17px, 2vw, 22px); line-height: 1.75; color: #ccc; margin-bottom: 40px; }
-  .about-statement strong { color: var(--off-white); }
-  .about-statement em { color: var(--acid); font-style: normal; }
-  .about-values { display: flex; flex-direction: column; gap: 2px; }
-  .value-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--mid); border-left: 3px solid var(--border); transition: all 0.2s; }
-  .value-row:hover { border-left-color: var(--acid); background: #181818; }
-  .value-name { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 2px; color: #ccc; text-transform: uppercase; }
-  .value-note { font-size: 13px; color: #888; font-style: italic; text-align: right; }
-  .manifesto-quote { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 6vw, 80px); line-height: 0.95; color: transparent; -webkit-text-stroke: 1px rgba(200,255,0,0.3); }
-  .manifesto-quote span { -webkit-text-stroke: 0; color: var(--acid); }
-  .about-note { font-size: 15px; color: #bbb; line-height: 1.8; font-style: italic; border-left: 2px solid var(--border); padding-left: 20px; margin-top: 24px; }
+  .about { border-top:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .about-statement { font-size:clamp(17px,2vw,22px); line-height:1.75; color:#ccc; margin-bottom:40px; }
+  .about-statement strong { color:var(--off-white); }
+  .about-statement em { color:var(--acid); font-style:normal; }
+  .about-values { display:flex; flex-direction:column; gap:2px; }
+  .value-row { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:var(--mid); border-left:3px solid var(--border); transition:all 0.2s; }
+  .value-row:hover { border-left-color:var(--acid); background:#181818; }
+  .value-name { font-family:'DM Mono',monospace; font-size:12px; letter-spacing:2px; color:#ccc; text-transform:uppercase; }
+  .value-note { font-size:13px; color:#888; font-style:italic; text-align:right; }
+  .manifesto-quote { font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,6vw,80px); line-height:0.95; color:transparent; -webkit-text-stroke:1px rgba(200,255,0,0.3); }
+  .manifesto-quote span { -webkit-text-stroke:0; color:var(--acid); }
+  .about-note { font-size:15px; color:#bbb; line-height:1.8; font-style:italic; border-left:2px solid var(--border); padding-left:20px; margin-top:24px; }
 
   /* CTA */
-  .cta-section { border-top: 1px solid var(--border); background: var(--acid); padding: 100px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 48px; }
-  .cta-left h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 96px); line-height: 0.95; color: var(--black); margin-bottom: 16px; }
-  .cta-left p { font-size: 17px; color: rgba(0,0,0,0.65); max-width: 440px; line-height: 1.7; }
-  .cta-right { display: flex; flex-direction: column; gap: 16px; }
-  .cta-btn { display: inline-block; font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; padding: 20px 40px; text-decoration: none; transition: all 0.2s; }
-  .cta-btn-primary { background: var(--black); color: var(--acid); }
-  .cta-btn-primary:hover { background: #1a1a1a; }
-  .cta-btn-secondary { background: transparent; color: var(--black); border: 1px solid rgba(0,0,0,0.3); text-align: center; }
-  .cta-btn-secondary:hover { background: rgba(0,0,0,0.08); }
-  .cta-note { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(0,0,0,0.5); text-align: center; }
+  .cta-section { border-top:1px solid var(--border); background:var(--acid); padding:100px 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:48px; }
+  .cta-left h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,7vw,96px); line-height:0.95; color:var(--black); margin-bottom:16px; }
+  .cta-left p { font-size:17px; color:rgba(0,0,0,0.65); max-width:440px; line-height:1.7; }
+  .cta-right { display:flex; flex-direction:column; gap:16px; }
+  .cta-btn { display:inline-block; font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; padding:20px 40px; text-decoration:none; transition:all 0.2s; }
+  .cta-btn-primary { background:var(--black); color:var(--acid); }
+  .cta-btn-primary:hover { background:#1a1a1a; }
+  .cta-btn-secondary { background:transparent; color:var(--black); border:1px solid rgba(0,0,0,0.3); text-align:center; }
+  .cta-btn-secondary:hover { background:rgba(0,0,0,0.08); }
+  .cta-note { font-family:'DM Mono',monospace; font-size:10px; color:rgba(0,0,0,0.5); text-align:center; }
 
   /* FOOTER */
-  footer { padding: 48px; border-top: 1px solid var(--border); }
-  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; margin-bottom: 48px; }
-  .footer-brand {}
-  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 4px; color: var(--off-white); display: block; margin-bottom: 12px; }
-  .footer-logo span { color: var(--acid); }
-  .footer-credit { font-size: 14px; color: #bbb; line-height: 1.6; }
-  .footer-credit strong { color: var(--off-white); }
-  .footer-credit .city { color: var(--warm); }
-  .footer-links { display: flex; gap: 32px; list-style: none; align-items: center; }
-  .footer-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #999; text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--acid); }
-  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 16px; }
-  .footer-copy { font-family: 'DM Mono', monospace; font-size: 10px; color: #555; }
-  .footer-cities { font-family: 'DM Mono', monospace; font-size: 10px; color: #555; letter-spacing: 2px; }
-  .footer-cities span { color: var(--warm); }
+  footer { padding:48px; border-top:1px solid var(--border); }
+  .footer-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; margin-bottom:48px; }
+  .footer-logo { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:4px; color:var(--off-white); display:block; margin-bottom:12px; }
+  .footer-logo span { color:var(--acid); }
+  .footer-credit { font-size:14px; color:#bbb; line-height:1.6; }
+  .footer-credit strong { color:var(--off-white); }
+  .footer-credit .city { color:var(--warm); }
+  .footer-links { display:flex; gap:32px; list-style:none; align-items:center; flex-wrap:wrap; }
+  .footer-links a { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#999; text-decoration:none; text-transform:uppercase; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--acid); }
+  .footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:24px; border-top:1px solid var(--border); flex-wrap:wrap; gap:16px; }
+  .footer-copy { font-family:'DM Mono',monospace; font-size:10px; color:#555; }
+  .footer-cities { font-family:'DM Mono',monospace; font-size:10px; color:#555; letter-spacing:2px; }
+  .footer-cities span { color:var(--warm); }
 
-  @media (max-width: 900px) {
-    nav { padding: 20px 24px; }
-    .nav-links { display: none; }
-    section { padding: 80px 24px; }
-    .hero { padding: 0 24px 60px; }
-    .manifesto-grid, .services-grid, .signal-grid, .work-grid { grid-template-columns: 1fr; }
-    .article-card.featured, .work-card-full { grid-column: span 1; }
-    .work-card-full { grid-template-columns: 1fr; gap: 32px; }
-    .about { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
-    .cta-section { padding: 60px 24px; }
-    footer { padding: 32px 24px; }
-    .article-overlay-inner { padding: 80px 24px 60px; }
-    .work-stat-grid { grid-template-columns: 1fr 1fr; }
+  @media (max-width:900px) {
+    nav { padding:20px 24px; }
+    .nav-links { display:none; }
+    section { padding:80px 24px; }
+    .hero { padding:0 24px 60px; }
+    .manifesto-grid,.services-grid,.signal-grid,.work-grid { grid-template-columns:1fr; }
+    .article-card.featured,.work-card-wide { grid-column:span 1; }
+    .work-card-wide { grid-template-columns:1fr; gap:32px; }
+    .about { grid-template-columns:1fr; gap:48px; padding:80px 24px; }
+    .cta-section { padding:60px 24px; }
+    footer { padding:32px 24px; }
+    .overlay-inner { padding:80px 24px 60px; }
   }
 </style>
 </head>
 <body>
 
 <div class="cursor" id="cursor"></div>
-<div class="article-overlay" id="articleOverlay">
-  <div class="article-overlay-inner" id="articleContent"></div>
+
+<!-- ARTICLE OVERLAY -->
+<div class="overlay" id="articleOverlay">
+  <div class="overlay-inner" id="articleContent"></div>
+</div>
+
+<!-- CASE STUDY OVERLAY -->
+<div class="overlay" id="caseStudyOverlay">
+  <div class="overlay-inner" id="csContent"></div>
 </div>
 
 <!-- NAV -->
@@ -231,7 +270,7 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
   </ul>
-  <a href="#consult" class="nav-cta">Free Audit →</a>
+  <a href="https://calendly.com/pratnair44/30min" target="_blank" class="nav-cta">Free Audit →</a>
 </nav>
 
 <!-- HERO -->
@@ -244,7 +283,7 @@
     <div class="line-3">MEANS SOMETHING.</div>
   </h1>
   <div class="hero-bottom">
-    <p class="hero-desc">Most brands are trying to be <strong>seen</strong>.<br>We're building brands that are <strong>remembered</strong>.<br>There's a difference. It lives in the static.</p>
+    <p class="hero-desc">Most brands are trying to be <strong>seen</strong>.<br>I build brands that are <strong>remembered</strong>.<br>There's a difference. It lives in the static.</p>
     <div class="hero-scroll"><div class="scroll-line"></div>Scroll to tune in</div>
   </div>
 </section>
@@ -263,7 +302,6 @@
     <span class="marquee-item">Local Business Teardowns <span class="marquee-dot">✦</span></span>
     <span class="marquee-item">Memory Over Beauty <span class="marquee-dot">✦</span></span>
     <span class="marquee-item">Free Brand Audits <span class="marquee-dot">✦</span></span>
-    <span class="marquee-item">Social Strategy <span class="marquee-dot">✦</span></span>
     <span class="marquee-item">The Signal Series <span class="marquee-dot">✦</span></span>
     <span class="marquee-item">Anti-Greyscale Marketing <span class="marquee-dot">✦</span></span>
   </div>
@@ -277,8 +315,8 @@
     <div class="manifesto-col" data-num="01">
       <h3>What We Aim To Do</h3>
       <div class="col-sub">Our mission, plainly stated</div>
-      <p>We study brands the way a critic studies film — with <strong>genuine obsession and zero sentimentality.</strong> We look for what's invisible, what's working underneath the surface, and what's quietly leaking value.</p>
-      <p>Then we say it out loud. Clearly. Without softening it.</p>
+      <p>I study brands the way a critic studies film — with <strong>genuine obsession and zero sentimentality.</strong> I look for what's invisible, what's working underneath the surface, and what's quietly leaking value.</p>
+      <p>Then I say it out loud. Clearly. Without softening it.</p>
       <ul>
         <li>Identify what your brand actually communicates vs. what you think it does</li>
         <li>Find the gap between the audience you have and the audience you deserve</li>
@@ -302,15 +340,6 @@
 </section>
 
 <!-- SIGNAL SERIES -->
-<!--
-==============================================
-HOW TO ADD A NEW ARTICLE — 2 steps:
-STEP 1: Copy a card block (marked below), paste as FIRST card in .signal-grid.
-        Update: data-article ID, issue, tag, title, blurb, meta.
-STEP 2: Find ARTICLES object in the script. Add matching entry with same key.
-STEP 3: Save → push to GitHub → live in 30 seconds.
-==============================================
--->
 <section class="signal" id="signal">
   <div class="signal-intro">
     <div>
@@ -320,7 +349,6 @@ STEP 3: Save → push to GitHub → live in 30 seconds.
     <p class="signal-tagline">Brand breakdowns for businesses doing something <strong>interesting</strong> — or that should be.</p>
   </div>
   <div class="signal-grid">
-
     <!-- ===== ARTICLE CARD — COPY FROM HERE ===== -->
     <div class="article-card featured" data-article="clarity-requires-exclusion">
       <div class="card-issue">Issue 002 · Brand Strategy</div>
@@ -346,7 +374,7 @@ STEP 3: Save → push to GitHub → live in 30 seconds.
       <div class="card-issue">Issue 004 · Social</div>
       <div class="card-tag">Social Media · Local Business</div>
       <h3>Your Instagram Is Your Receipt</h3>
-      <p>Instagram doesn't make you a brand. It exposes what you've been doing. And a lot of local business receipts read like a coping mechanism.</p>
+      <p>Instagram doesn't make you a brand. It exposes what you've been doing. And a lot of receipts read like a coping mechanism.</p>
       <div class="card-meta">MAR 2025 · 5 MIN READ</div>
     </div>
     <!-- ===== ARTICLE CARD — COPY TO HERE ===== -->
@@ -356,85 +384,74 @@ STEP 3: Save → push to GitHub → live in 30 seconds.
       <div class="card-issue">Issue 001 · Local Breakdown</div>
       <div class="card-tag">Thunder Bay · Bar & Eatery</div>
       <h3>The City You Forgot You Wanted</h3>
-      <p>How Pocketchange built the bar Thunder Bay didn't know it was waiting for — and why the gap between their brand and their crowd is the whole story.</p>
+      <p>How Pocketchange built the bar Thunder Bay didn't know it was waiting for — and why the gap between brand and crowd is the whole story.</p>
       <div class="card-meta">MAR 2025 · 6 MIN READ</div>
     </div>
     <!-- ===== ARTICLE CARD — COPY TO HERE ===== -->
 
-    <div class="signal-cta">
+    <div class="signal-cta" onclick="window.location.href='mailto:pratnair44@gmail.com'">
       <div class="signal-cta-label">Want in?</div>
-      <h3>We Write About Brands We Find Interesting.</h3>
+      <h3>I Write About Brands I Find Interesting.</h3>
       <p>Think yours qualifies? Reach out.</p>
     </div>
-
   </div>
 </section>
 
-<!-- WORK / SELECTED PROJECTS -->
+<!-- WORK -->
 <section class="work" id="work">
   <div class="section-tag">// 03 — Selected Work</div>
   <h2 class="section-title">PROOF OF<br>SIGNAL.</h2>
-
   <div class="work-grid">
 
-    <div class="work-card">
+    <div class="work-card" onclick="openCS('links')">
       <div class="work-accent">01</div>
       <div class="work-num">Project 01 · Thunder Bay</div>
       <h3>On The Links</h3>
       <div class="work-type">Sports Bar · Indoor Golf · Brand Positioning</div>
-      <p class="work-desc">Refined the identity of a local sports bar and golf simulator beyond "just another bar." Built a <strong>destination strategy</strong> around competition, social leagues, event nights, and experiential value — shifting focus from single visits to repeat traffic systems designed to increase customer lifetime value.</p>
+      <p class="work-desc">Transformed a local sports bar from "a place to grab drinks" into an <strong>experiential destination</strong> — built around competition culture, structured leagues, and repeat-traffic systems.</p>
       <div class="work-tags">
         <span class="work-tag">Positioning</span>
         <span class="work-tag">Event Strategy</span>
-        <span class="work-tag">Brand Cohesion</span>
         <span class="work-tag">Retention</span>
+        <span class="work-tag">Brand Cohesion</span>
       </div>
+      <div class="work-open">View Case Study →</div>
     </div>
 
-    <div class="work-card">
+    <div class="work-card" onclick="openCS('conservatory')">
       <div class="work-accent">02</div>
       <div class="work-num">Project 02 · Thunder Bay</div>
       <h3>The Conservatory</h3>
       <div class="work-type">Community Asset · Cultural Strategy · Youth Outreach</div>
-      <p class="work-desc">Positioned a city conservatory not just as a public asset, but as a <strong>pipeline for inspiration</strong> — particularly for Indigenous youth. Connected environmental engagement with long-term STEM exposure, framing the space as one that sparks curiosity in biology, sustainability, and environmental sciences.</p>
+      <p class="work-desc">Repositioned a city conservatory as a <strong>STEM inspiration pipeline</strong> — with culturally aware Indigenous youth outreach and internal operational systems design.</p>
       <div class="work-tags">
         <span class="work-tag">Cultural Outreach</span>
-        <span class="work-tag">Community Integration</span>
         <span class="work-tag">STEM Pipeline</span>
+        <span class="work-tag">Systems Design</span>
         <span class="work-tag">Youth Strategy</span>
       </div>
+      <div class="work-open">View Case Study →</div>
     </div>
 
-    <div class="work-card-full">
+    <div class="work-card-wide" onclick="openCS('library')">
       <div>
         <div class="work-num">Project 03 · Thunder Bay</div>
         <h3>Thunder Bay Public Library</h3>
         <div class="work-type">Civic Institution · Modernization · Digital Strategy</div>
-        <p class="work-desc">The challenge was modernization without identity loss. We proposed structural updates to how the library presents itself publicly — refreshing marketing channels, improving service visibility, and <strong>rethinking how it connects with younger demographics.</strong> The goal was to evolve an aging system into a more digitally aware, community-responsive institution while preserving its role as a civic anchor.</p>
+        <p class="work-desc">Modernized an aging but essential civic institution for a digitally native generation — without losing the <strong>community anchor identity</strong> that makes it irreplaceable.</p>
         <div class="work-tags">
           <span class="work-tag">Modernization</span>
           <span class="work-tag">Digital Strategy</span>
           <span class="work-tag">Civic Branding</span>
           <span class="work-tag">Youth Engagement</span>
         </div>
+        <div class="work-open" style="margin-top:24px;">View Case Study →</div>
       </div>
-      <div class="work-stat-grid">
-        <div class="work-stat">
-          <div class="work-stat-num">3</div>
-          <div class="work-stat-label">Community Institutions</div>
-        </div>
-        <div class="work-stat">
-          <div class="work-stat-num">1</div>
-          <div class="work-stat-label">City. Real Impact.</div>
-        </div>
-        <div class="work-stat">
-          <div class="work-stat-num">∞</div>
-          <div class="work-stat-label">Strategic Transformation</div>
-        </div>
-        <div class="work-stat">
-          <div class="work-stat-num">0</div>
-          <div class="work-stat-label">Generic Playbooks Used</div>
-        </div>
+      <div class="work-stats">
+        <div class="work-stat"><div class="work-stat-num">3</div><div class="work-stat-label">Community Institutions</div></div>
+        <div class="work-stat"><div class="work-stat-num">1</div><div class="work-stat-label">City. Real Impact.</div></div>
+        <div class="work-stat"><div class="work-stat-num">∞</div><div class="work-stat-label">Strategic Depth</div></div>
+        <div class="work-stat"><div class="work-stat-num">0</div><div class="work-stat-label">Generic Playbooks</div></div>
       </div>
     </div>
 
@@ -449,14 +466,14 @@ STEP 3: Save → push to GitHub → live in 30 seconds.
     <div class="service-card">
       <div class="service-num">01 ——</div>
       <h3>Brand Audit</h3>
-      <p>A 30-minute session where we look at your brand with <strong>completely honest eyes.</strong> What you're saying. What you're not. What the market is probably hearing instead.</p>
+      <p>A 30-minute session where I look at your brand with <strong>completely honest eyes.</strong> What you're saying. What you're not. What the market is probably hearing instead.</p>
       <p>No sales pitch. No agenda. Just the read.</p>
       <div class="service-footer">Free to start</div>
     </div>
     <div class="service-card">
       <div class="service-num">02 ——</div>
       <h3>Brand Strategy</h3>
-      <p>For businesses that know something is off but can't name it. We <strong>diagnose the disconnect</strong> between who you are, who you say you are, and who your audience thinks you are.</p>
+      <p>For businesses that know something is off but can't name it. I <strong>diagnose the disconnect</strong> between who you are, who you say you are, and who your audience thinks you are.</p>
       <div class="service-footer">Let's talk scope</div>
     </div>
     <div class="service-card">
@@ -472,17 +489,18 @@ STEP 3: Save → push to GitHub → live in 30 seconds.
 <section class="about" id="about">
   <div class="about-left">
     <div class="section-tag">// 05 — About Static</div>
-    <p class="about-statement">We're a small team with a <strong>disproportionately large opinion</strong> about what marketing should be doing — and almost never is.<br><br>We believe most brands are beautiful and <em>forgettable</em>. We're here to fix the second part.<br><br>Based in Thunder Bay. Originally from Mumbai. Thinking about everywhere else.</p>
+    <p class="about-statement">I have a <strong>disproportionately large opinion</strong> about what marketing should be doing — and almost never is.<br><br>I believe most brands are beautiful and <em>forgettable</em>. I'm here to fix the second part.<br><br>One person. Sharp eyes. Based in Thunder Bay. Originally from Mumbai. Thinking about everywhere else.</p>
+    <a href="https://www.linkedin.com/in/pratyushrameshnair/" target="_blank" style="display:inline-flex;align-items:center;gap:10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#bbb;border:1px solid #333;padding:12px 20px;text-decoration:none;margin-bottom:32px;transition:all 0.2s;" onmouseover="this.style.color='#c8ff00';this.style.borderColor='#c8ff00'" onmouseout="this.style.color='#bbb';this.style.borderColor='#333'">↗ Pratyush Nair on LinkedIn</a>
     <div class="about-values">
       <div class="value-row"><span class="value-name">Memory > Beauty</span><span class="value-note">What sticks matters more than what shines</span></div>
       <div class="value-row"><span class="value-name">Narrative Control</span><span class="value-note">Your story gets told either way</span></div>
-      <div class="value-row"><span class="value-name">Radical Candour</span><span class="value-note">We say the thing</span></div>
+      <div class="value-row"><span class="value-name">Radical Candour</span><span class="value-note">I say the thing</span></div>
       <div class="value-row"><span class="value-name">Specificity Wins</span><span class="value-note">Niche deeper than you think you should</span></div>
     </div>
   </div>
   <div class="about-right">
     <div class="manifesto-quote">GREY IS FOR<br><span>GRAVE</span>STONES.</div>
-    <p class="about-note">Every brand exists in a cultural moment. Most are too scared to acknowledge it. We think that's where all the interesting work lives — in the static between what a brand says and what the world actually needs to hear.</p>
+    <p class="about-note">Every brand exists in a cultural moment. Most are too scared to acknowledge it. I think that's where all the interesting work lives — in the static between what a brand says and what the world actually needs to hear.</p>
   </div>
 </section>
 
@@ -490,31 +508,29 @@ STEP 3: Save → push to GitHub → live in 30 seconds.
 <div class="cta-section" id="consult">
   <div class="cta-left">
     <h2>LET'S FIND<br>YOUR SIGNAL.</h2>
-    <p>Book a free 30-minute brand audit. No pitch, no invoice. Just an honest look at where you are and what's possible.</p>
+    <p>Book a free 30-minute brand audit. No pitch, no invoice. Just an honest look at where you are and what's possible — from one person who will actually tell you the truth.</p>
   </div>
   <div class="cta-right">
-    <a href="mailto:hello@staticagency.com" class="cta-btn cta-btn-primary">Book Free Audit →</a>
-    <a href="mailto:hello@staticagency.com" class="cta-btn cta-btn-secondary">Just Say Hello</a>
-    <div class="cta-note">hello@staticagency.com</div>
+    <a href="https://calendly.com/pratnair44/30min" target="_blank" class="cta-btn cta-btn-primary">Book Free Audit →</a>
+    <a href="mailto:pratnair44@gmail.com" class="cta-btn cta-btn-secondary">Just Say Hello</a>
+    <div class="cta-note"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cdbdbfacb9a3aca4bff9f98daaa0aca4a1e3aea2a0">[email&#160;protected]</a></div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
-    <div class="footer-brand">
+    <div>
       <span class="footer-logo">STAT<span>I</span>C</span>
-      <p class="footer-credit">
-        Strategy & Direction — <strong>Pratyush Nair</strong><br>
-        <span class="city">Mumbai</span> born. Thunder Bay built.
-      </p>
+      <p class="footer-credit">Strategy & Direction — <strong>Pratyush Nair</strong><br><span class="city">Mumbai</span> born. Thunder Bay built.</p>
     </div>
     <ul class="footer-links">
       <li><a href="#signal">Signal Series</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#consult">Free Audit</a></li>
+      <li><a href="https://www.linkedin.com/in/pratyushrameshnair/" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:pratnair44@gmail.com">Contact</a></li>
     </ul>
   </div>
   <div class="footer-bottom">
@@ -523,161 +539,284 @@ STEP 3: Save → push to GitHub → live in 30 seconds.
   </div>
 </footer>
 
-<script>
-// ==============================================
-// ARTICLES DATA
-// To add: copy one entry, give it a unique key,
-// match the key to data-article on the card above.
-// ==============================================
-const ARTICLES = {
-
-  "pocketchange": {
-    issue: "Issue 001 · Thunder Bay · Bar & Eatery",
-    title: "The City You Forgot You Wanted",
-    subtitle: "How Pocketchange built the bar Thunder Bay didn't know it was waiting for — and why the gap between their brand and their crowd is the whole story.",
-    meta: "MAR 2025 · BUSINESS PROFILE · 6 MIN READ",
-    body: `
-      <p>There's a specific feeling that hits you when you walk into Pocketchange. It takes a second to place it, because it doesn't quite belong here — and that's exactly the point.</p>
-      <p>Thunder Bay is a city with a lot of good things going for it. It is not, historically, a city known for its nightlife sophistication. Which makes what Pocketchange has done even more interesting. They didn't try to make Thunder Bay something it isn't. They simply imported a frequency — the specific energy of a cool, considered, slightly-too-aware-of-itself Toronto bar — and turned it on in a room where nobody was expecting it.</p>
-      <p><strong>It worked.</strong></p>
-      <h2>The Product Is the Feeling</h2>
-      <p>Most bars sell drinks. The smarter ones sell an atmosphere. Pocketchange is selling something subtler and more powerful than both: a permission slip. The permission to feel like you're somewhere with a pulse.</p>
-      <p>Their social aesthetic — clean, considered, effortlessly cool — reinforces this at every touchpoint. There's a visual language in place that most local venues don't even know they need. <strong>That's not small. That's brand thinking. In a bar.</strong></p>
-      <h2>The Niche Carve — and Its Double Edge</h2>
-      <p>The smart part: they chose a lane. Youthful, rebellious, zany. Not pretentious — that's a critical distinction. It feels like it's for people who get it, without making you feel like you don't.</p>
-      <p>The risky part: the crowd doesn't always reflect the brand. That gap — between the audience a brand is designed for and the audience actually walking through the door — is the most underexamined tension in local hospitality. <em>Brands that drift rarely notice until it's already happened.</em></p>
-      <h2>Memory > Beauty</h2>
-      <p>Their social media is genuinely good. But here's the thing about beautiful content: it can be forgotten the moment you scroll past it. Pocketchange's biggest opportunity isn't better content. It's capturing the feeling — the one that hits you when you walk in — and making it translatable online.</p>
-      <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>
-      <p>What Pocketchange has built is rarer than it looks. A cultural bet, placed confidently, in a market that wasn't asking for it. The city forgot it was waiting for this. Now it just needs to remember.</p>
-    `
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ============================================================
+// CASE STUDIES
+// ============================================================
+const CS = {
+  links: {
+    prev: null,
+    next: 'conservatory',
+    eyebrow: 'Project 01 · Thunder Bay · Hospitality & Entertainment',
+    title: 'On The Links',
+    subtitle: 'Transforming a local sports bar and indoor golf simulator from a casual stop-in into a defined experiential destination — built around competition, community, and repeat culture.',
+    meta: [
+      { label: 'Project Focus', value: 'Brand Positioning · Customer Retention · Experiential Marketing' },
+      { label: 'Location', value: 'Thunder Bay, ON' },
+      { label: 'Sector', value: 'Hospitality · Entertainment' }
+    ],
+    intro: 'On The Links had something most local bars don\'t: a genuinely unique offer. An indoor golf simulator inside a sports bar isn\'t a gimmick — it\'s a category. But without a clearly defined identity, it was being treated like one. The brief was to fix that.',
+    blocks: [
+      {
+        label: 'The Problem',
+        heading: 'A Place Without a Positioning',
+        body: `<p>Most hospitality businesses make the same mistake: they describe what they <em>are</em> instead of defining what they're <strong>for</strong>. On The Links had a unique offer but was communicating it as a feature rather than an identity.</p>
+        <p>The result was a venue that attracted walk-ins and curious first-timers — but struggled to build the repeat culture and word-of-mouth loyalty that sustains a local institution long-term. Without positioning, the simulator was just a novelty. With it, it becomes a reason to come back.</p>`,
+        list: null
+      },
+      {
+        label: 'The Strategy',
+        heading: 'From Novelty to Destination',
+        body: `<p>The core strategic shift was reframing On The Links from <strong>"a bar with a golf simulator"</strong> to <strong>"the place where competitive social culture happens."</strong> That's a different product. It attracts a different customer. And it builds a fundamentally different kind of loyalty.</p>`,
+        list: [
+          '<strong>Brand positioning framework</strong> centred around competition, leagues, and social event culture — giving the venue a clear identity that a chain can\'t replicate',
+          '<strong>Structured promotional systems</strong> including weekly tournament formats, themed leagues, seasonal competitions, and group booking experiences designed to drive repeat traffic',
+          '<strong>Customer lifecycle strategy</strong> focused on moving first-time visitors into regular league participants — shifting the model from single visits to long-term engagement',
+          '<strong>Marketing deliverables</strong> for consistent digital presence: social content frameworks, event promotion templates, and a posting structure that maintains brand cohesion without heavy resource demands'
+        ]
+      },
+      {
+        label: 'The Thinking',
+        heading: 'Retention Is a Product Decision',
+        body: `<p>Most marketing focuses on acquisition — getting people in the door. But in local hospitality, <strong>customer lifetime value dwarfs one-time visit revenue.</strong> A regular who comes for Tuesday league night, brings three friends, and becomes a brand ambassador is worth more than ten first-timers who never return.</p>
+        <p>The league and tournament structure wasn't just a promotional tactic. It was a product decision — engineering reasons to come back into the experience itself. Competition creates stakes. Stakes create investment. Investment creates loyalty. That loop, once built, markets itself.</p>`
+      }
+    ],
+    tags: ['Brand Positioning', 'Experiential Marketing', 'Event Strategy', 'Customer Retention', 'Social League Design', 'Digital Presence'],
+    closing: 'On The Links isn\'t selling golf. It\'s selling <strong>the feeling of having a local competitive scene</strong> — a place where your game actually means something and your crew has a reason to show up every week. That shift from "what we offer" to "who we\'re for" changes everything downstream: pricing, promotion, loyalty, word-of-mouth.'
   },
 
-  "clarity-requires-exclusion": {
-    issue: "Issue 002 · Brand Strategy",
-    title: "Clarity Requires Exclusion",
-    subtitle: "A lot of local businesses look polished now. The visuals are clean, the space is nice, the grid is consistent. But ask one simple question — what are they known for? — and the answer comes back blurry.",
-    meta: "MAR 2025 · BRAND BREAKDOWN · 7 MIN READ",
-    body: `
-      <p>That's the actual problem. Not effort. Not taste. <strong>Blurriness.</strong></p>
-      <p>There's a reason Positioning still holds up: the real fight isn't just on the street — it's in the customer's mind. If you don't own a clear slot in someone's head, you get treated like a "maybe." And "maybe" is where businesses quietly die.</p>
-      <h2>The Move Most Brands Avoid</h2>
-      <p>Clarity forces a decision. Not "what's our vibe?" Not "what's our aesthetic?" A real decision:</p>
-      <ul>
-        <li>Who is this actually for?</li>
-        <li>What situation is it built for?</li>
-        <li>What kind of customer is it <strong>not</strong> trying to win?</li>
-      </ul>
-      <p>That last part is where most local brands freeze — because it feels like you're turning people away. But that's the point. <strong>Exclusion isn't a personality trait. It's the cost of being clear.</strong></p>
-      <h2>Why Small Towns Punish "Nice and General"</h2>
-      <p>In smaller markets, the competition is more brutal than people admit. Big brands can undercut you on price, outspend you on attention, and survive on volume. If you don't differentiate enough, you get dragged into a game you can't win.</p>
-      <p>Differentiation is how a small business earns the right to charge more without constantly explaining itself. It's the only way you avoid competing purely on price.</p>
-      <h2>The Boutique That Gets Squeezed</h2>
-      <p>Picture a new boutique in a small city. Good lighting. Clean racks. Tasteful branding. The messaging: "Curated pieces. Modern style. Something for everyone." Then someone goes to Winners, finds something close enough, pays half, and moves on. Not because the boutique is worse — because it never gave people a reason to choose it that a chain can't copy.</p>
-      <p>Now imagine it makes one clear decision: <em>"We build complete outfits for people who hate shopping."</em> Now it's selling relief and certainty. A 10-minute outfit build. One rack of work fits under $200. A date-night fit in 15 minutes. It just excluded customers who love browsing for fun. Doesn't matter — those customers were never going to pay boutique margins anyway.</p>
-      <p><strong>The goal isn't to be extreme. The goal is to be obvious to the right person. Because if your brand is for everyone, it usually ends up being chosen by no one.</strong></p>
-      <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>
-    `
+  conservatory: {
+    prev: 'links',
+    next: 'library',
+    eyebrow: 'Project 02 · Thunder Bay · Community & Education',
+    title: 'The Conservatory',
+    subtitle: 'Repositioning a civic botanical space as a long-term STEM inspiration hub — with culturally aware outreach designed to build academic pathways for Indigenous youth and underserved communities.',
+    meta: [
+      { label: 'Project Focus', value: 'Educational Positioning · Indigenous Outreach · Systems Design' },
+      { label: 'Location', value: 'Thunder Bay, ON' },
+      { label: 'Sector', value: 'Community · Education · Civic' }
+    ],
+    intro: 'This project went beyond marketing. The conservatory had genuine potential as a community asset — but was being experienced as a passive attraction rather than an active opportunity. The work was about reframing what the space could mean: not just a place to visit, but a place that could change what a young person imagines for themselves.',
+    blocks: [
+      {
+        label: 'The Challenge',
+        heading: 'A Space With Untapped Meaning',
+        body: `<p>Botanical conservatories face a positioning challenge: they're easy to appreciate and easy to forget. A beautiful space that doesn't connect to anything ongoing in a visitor's life creates a one-time impression, not a lasting relationship.</p>
+        <p>For this project, the deeper challenge was specific: <strong>how do you make a conservatory feel genuinely relevant to Indigenous youth in Thunder Bay?</strong> Young people for whom mainstream institutional spaces haven't always felt designed with them in mind. That required more than better marketing — it required a strategy built on cultural awareness and genuine community integration.</p>`,
+        list: null
+      },
+      {
+        label: 'The Strategy',
+        heading: 'From Attraction to Pipeline',
+        body: `<p>The strategic reframe positioned the conservatory as a <strong>STEM inspiration hub</strong> — particularly for Indigenous students and underserved youth in the region. Not because this was the obvious move, but because the connection was genuinely there: environmental science, biology, sustainability, and Indigenous land knowledge all live inside this space. The work was making that visible and actionable.</p>`,
+        list: [
+          '<strong>Educational positioning strategy</strong> aligning the conservatory\'s programming with future STEM pathways in biology, sustainability, and environmental science',
+          '<strong>Culturally aware outreach framework</strong> designed to strengthen Indigenous community engagement — prioritising genuine relevance over performative inclusion',
+          '<strong>Programming architecture</strong> that transforms short visits into sustained academic curiosity, with structured follow-through to maintain student connection beyond the visit',
+          '<strong>Prototype internal dashboards</strong> to streamline workflow, event coordination, and program tracking — operationalising the strategy at an institutional level',
+          '<strong>Educator-facing dashboard concept</strong> to deepen teacher–student engagement, measure learning outcomes, and integrate conservatory experiences into classroom curriculum objectives'
+        ]
+      },
+      {
+        label: 'The Thinking',
+        heading: 'Systems Thinking Meets Community Strategy',
+        body: `<p>What made this project different was the combination of <strong>marketing strategy and operational systems design.</strong> Most brand work stops at messaging. This project went deeper — into the internal infrastructure needed to actually deliver on a repositioned identity consistently over time.</p>
+        <p>The educator dashboard concept came from a simple observation: teachers are the distribution channel. If a conservatory visit can be integrated into curriculum objectives and learning outcomes can be measured, it stops being a field trip and starts being a pedagogical tool. That's a fundamentally different relationship with the institution — and a much stickier one.</p>`
+      }
+    ],
+    tags: ['Educational Positioning', 'Indigenous Outreach', 'STEM Pipeline', 'Community Strategy', 'Systems Design', 'Dashboard Prototyping', 'Curriculum Integration'],
+    closing: 'The most important question wasn\'t <strong>"how do we get more visitors?"</strong> It was <strong>"what does this space make possible for the people who need it most?"</strong> That shift — from attendance metrics to long-term opportunity — changed the entire strategic direction of the project.'
   },
 
-  "everything-is-cultural": {
-    issue: "Issue 003 · Culture & Identity",
-    title: "Everything Is Cultural",
-    subtitle: "A café isn't selling coffee. It's selling a room people want to belong to. And that room broadcasts values whether you like it or not.",
-    meta: "MAR 2025 · BRAND BREAKDOWN · 6 MIN READ",
-    body: `
-      <p>So "keeping politics out of business" is usually just another way of saying: don't make me commit. But customers commit all the time. They choose spaces that match how they see themselves — or how they want to be seen. <strong>Culture isn't a side topic. It's the operating system.</strong></p>
-      <h2>Neutral Is Not Mature. Neutral Is Anonymous.</h2>
-      <p>"Neutral" businesses don't feel professional. They feel replaceable. Built to offend nobody, which usually means they excite nobody. Clean, safe, forgettable — like a waiting room with better lighting. Chains can afford to be replaceable. You can't.</p>
-      <h2>The Campus Café</h2>
-      <p>If your café is near a university, your customer isn't "everyone." It's students. And students pick places the same way they pick playlists: by identity.</p>
-      <p>If the café is aesthetically clean but culturally blank — no community board that's actually used, no signs of what the place stands for — students don't think "classy." They think: <em>this place has no pulse.</em> Then they find a café with a pulse and make it their spot.</p>
-      <p>Now make one decision: align the space with the people you want inside it. Host at least one event a month your core audience resonates with. Let the walls say something. Some customers will be performative about it. <strong>Great. Performative spreads. Spread brings people. People turn into habits.</strong> That's not ideology. That's distribution.</p>
-      <h2>The Part Everyone Dances Around</h2>
-      <p>Big corporations "take stands" too — but it's always system-approved and reversible. That's why it feels fake. Local businesses can actually do it properly because they're close enough to mean it.</p>
-      <p><strong>If your space stands for nothing, don't be surprised when nobody stands with it.</strong></p>
-      <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>
-    `
-  },
-
-  "instagram-is-your-receipt": {
-    issue: "Issue 004 · Social Media",
-    title: "Your Instagram Is Your Receipt",
-    subtitle: "Instagram doesn't make you a brand. It exposes what you've been doing. It's not your identity. It's your paper trail.",
-    meta: "MAR 2025 · BRAND BREAKDOWN · 5 MIN READ",
-    body: `
-      <p>And a lot of local business receipts read like a coping mechanism: "Good vibes." "Community." "New drop." "Back at it." That's not marketing. That's narration.</p>
-      <h2>A Pretty Feed Is the New "Open" Sign</h2>
-      <p>Good lighting, clean fonts, smooth reels — everyone has that now. Aesthetic is not a differentiator. It's the minimum requirement to be taken seriously for two seconds before someone keeps scrolling. You don't want to build background noise. You want to build a page people actually enjoy interacting with.</p>
-      <h2>The Receipt Test</h2>
-      <p>If a stranger scrolls your last 12 posts and can't answer this, you're invisible: <em>What is this place known for?</em></p>
-      <p>Not "what do they sell." Not "what's their vibe." <strong>What are they known for?</strong> That's what people repeat. That's what gets recommended. That's what becomes a default choice. Most feeds never earn that sentence. They aim for "nice." And "nice" is what people say when they have nothing specific to say.</p>
-      <h2>Same Product, Different Receipt</h2>
-      <p>Two cafés post latte art. Both look good. Both have plants and warm lighting.</p>
-      <p>Café A posts: "cozy vibes ☕️✨"</p>
-      <p>Café B posts: "open late for students. quiet tables. no music. 10pm–11pm is the reason we exist."</p>
-      <p>Same coffee. Different receipt. One is documenting aesthetics. The other is documenting <strong>a reason</strong>. And reasons travel.</p>
-      <h2>The Uncomfortable Part</h2>
-      <p>A lot of businesses use Instagram like a mirror: "look at us." But customers use Instagram like a filter: <em>is this for me?</em> If your feed can't filter, it can't attract. It can only beg. And begging is a terrible brand strategy.</p>
-      <p>Instagram is not your brand. It's the evidence you leave behind.</p>
-      <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>
-    `
+  library: {
+    prev: 'conservatory',
+    next: null,
+    eyebrow: 'Project 03 · Thunder Bay · Civic Institution',
+    title: 'Thunder Bay Public Library',
+    subtitle: 'Modernizing an essential civic institution for a digitally native generation — without losing the community anchor identity that makes it irreplaceable.',
+    meta: [
+      { label: 'Project Focus', value: 'Institutional Modernization · Digital Strategy · Youth Engagement' },
+      { label: 'Location', value: 'Thunder Bay, ON' },
+      { label: 'Sector', value: 'Civic · Public Service' }
+    ],
+    intro: 'Public libraries face an existential positioning challenge in the digital age: they hold enormous value that is increasingly invisible to the people who need it most. The Thunder Bay Public Library had the resources, the community trust, and the programming — but was communicating them through channels and frameworks that increasingly missed younger demographics entirely.',
+    blocks: [
+      {
+        label: 'The Problem',
+        heading: 'An Institution Talking to Yesterday',
+        body: `<p>The library wasn't broken. It was relevant — but presenting itself in ways that made it feel like it wasn't. There's a significant difference between those two things, and it's entirely a marketing and communication problem.</p>
+        <p>For younger residents — students, young professionals, new families — the library existed as a vague civic memory rather than an active resource. <strong>The value was real. The visibility wasn't.</strong> That gap was the work.</p>`,
+        list: null
+      },
+      {
+        label: 'The Strategy',
+        heading: 'From Static Service to Dynamic Platform',
+        body: `<p>The central strategic shift was repositioning the library from <strong>"a place that holds things"</strong> to <strong>"a platform that enables things."</strong> That's not a cosmetic change — it's a fundamental reframe of what the institution offers and who it actively serves.</p>`,
+        list: [
+          '<strong>Refreshed communication strategy</strong> focused on clearer service visibility — making programs, resources, and events legible to audiences who aren\'t already engaged',
+          '<strong>Modernized outreach channels</strong> targeting younger demographics through digital-first formats on platforms where they actually spend time',
+          '<strong>Structural marketing updates</strong> improving how the library presents programs and resources, reducing friction between what it offers and what the public knows it offers',
+          '<strong>Community platform repositioning</strong> — shifting the narrative from static service provider to dynamic civic space that actively responds to evolving community needs',
+          '<strong>Youth engagement framework</strong> designed to make the library feel genuinely relevant to students and young adults who have mentally aged it out'
+        ]
+      },
+      {
+        label: 'The Thinking',
+        heading: 'Modernization Without Identity Loss',
+        body: `<p>The risk with institutional modernization is overcorrection — stripping away the identity that makes an institution trusted in an attempt to feel current. The library's <strong>civic anchor role is its competitive advantage.</strong> Chains and digital platforms can provide information. They cannot provide the kind of neutral, trusted, community-owned space that a public library represents.</p>
+        <p>The strategy was to modernize the communication infrastructure while protecting — and actively amplifying — that core identity. Make it easier to find. Make it easier to use. Make it feel like it belongs to this generation as much as any other. But never make it feel like it's trying to be something it isn't.</p>`
+      }
+    ],
+    tags: ['Institutional Modernization', 'Digital Strategy', 'Civic Branding', 'Youth Engagement', 'Communication Strategy', 'Service Visibility'],
+    closing: 'The library doesn\'t need to compete with the internet. It needs to be the thing the internet can\'t be: <strong>trusted, local, human, and genuinely yours.</strong> The strategy was about making that visible again — to the generation that grew up assuming it wasn\'t.'
   }
+};
 
-  // ==============================================
-  // ADD NEW ARTICLES BELOW THIS LINE:
-  // "your-article-id": {
-  //   issue: "Issue 005 · Category",
-  //   title: "Your Title",
-  //   subtitle: "One line that captures the piece.",
-  //   meta: "MON YEAR · TYPE · X MIN READ",
-  //   body: `<p>Content here...</p>`
-  // },
-  // ==============================================
+function openCS(id) {
+  const cs = CS[id];
+  if (!cs) return;
+  const blocksHTML = cs.blocks.map(b => `
+    <div class="cs-block">
+      <div class="cs-block-label">${b.label}</div>
+      <h2>${b.heading}</h2>
+      ${b.body}
+      ${b.list ? `<ul class="cs-list">${b.list.map(i=>`<li>${i}</li>`).join('')}</ul>` : ''}
+    </div>
+    <div class="cs-divider"></div>
+  `).join('');
+
+  document.getElementById('csContent').innerHTML = `
+    <button class="overlay-back" onclick="closeCS()">← Back to Work</button>
+    <div class="cs-eyebrow">${cs.eyebrow}</div>
+    <h1>${cs.title}</h1>
+    <p class="cs-subtitle">${cs.subtitle}</p>
+    <div class="cs-meta-row">${cs.meta.map(m=>`<div class="cs-meta-item"><div class="cs-meta-label">${m.label}</div><div class="cs-meta-value">${m.value}</div></div>`).join('')}</div>
+    <p class="cs-intro">${cs.intro}</p>
+    ${blocksHTML}
+    <div class="cs-tags">${cs.tags.map(t=>`<span class="cs-tag">${t}</span>`).join('')}</div>
+    <div class="cs-closing"><div class="cs-closing-label">The Through-Line</div><p>${cs.closing}</p></div>
+    <div class="cs-nav">
+      ${cs.prev ? `<button class="cs-nav-btn" onclick="openCS('${cs.prev}')">← Previous Project</button>` : '<span></span>'}
+      <button class="cs-nav-btn" onclick="closeCS()">↑ Back to Work</button>
+      ${cs.next ? `<button class="cs-nav-btn" onclick="openCS('${cs.next}')">Next Project →</button>` : '<span></span>'}
+    </div>
+  `;
+  const ov = document.getElementById('caseStudyOverlay');
+  ov.classList.add('open');
+  ov.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCS() {
+  document.getElementById('caseStudyOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ============================================================
+// ARTICLES
+// ============================================================
+const ARTICLES = {
+  "pocketchange": {
+    issue:"Issue 001 · Thunder Bay · Bar & Eatery",
+    title:"The City You Forgot You Wanted",
+    subtitle:"How Pocketchange built the bar Thunder Bay didn't know it was waiting for — and why the gap between their brand and their crowd is the whole story.",
+    meta:"MAR 2025 · BUSINESS PROFILE · 6 MIN READ",
+    body:`<p>There's a specific feeling that hits you when you walk into Pocketchange. It takes a second to place it, because it doesn't quite belong here — and that's exactly the point.</p>
+    <p>Thunder Bay is a city with a lot of good things going for it. It is not, historically, a city known for its nightlife sophistication. Which makes what Pocketchange has done even more interesting. They didn't try to make Thunder Bay something it isn't. They simply imported a frequency — the specific energy of a cool, considered, slightly-too-aware-of-itself bar — and turned it on in a room where nobody was expecting it. <strong>It worked.</strong></p>
+    <h2>The Product Is the Feeling</h2>
+    <p>Most bars sell drinks. The smarter ones sell atmosphere. Pocketchange is selling something subtler and more powerful: a permission slip. The permission to feel like you're somewhere with a pulse. Their social aesthetic — clean, considered, effortlessly cool — reinforces this at every touchpoint. <strong>That's brand thinking. In a bar.</strong></p>
+    <h2>The Niche Carve — and Its Double Edge</h2>
+    <p>They chose a lane. Youthful, rebellious, zany — not pretentious. It feels like it's for people who get it, without making you feel like you don't. The risk: the crowd doesn't always reflect the brand. That gap between the audience a brand is designed for and the audience actually walking in is the most underexamined tension in local hospitality. <em>Brands that drift rarely notice until it's already happened.</em></p>
+    <h2>Memory > Beauty</h2>
+    <p>Their social media is genuinely good. But beautiful content can be forgotten the moment you scroll past it. Pocketchange's biggest opportunity isn't better content — it's capturing the feeling that hits you when you walk in and making it translatable online.</p>
+    <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>
+    <p>A cultural bet, placed confidently, in a market that wasn't asking for it. The city forgot it was waiting for this. Now it just needs to remember.</p>`
+  },
+  "clarity-requires-exclusion": {
+    issue:"Issue 002 · Brand Strategy",
+    title:"Clarity Requires Exclusion",
+    subtitle:"A lot of local businesses look polished now. But ask one question — what are they known for? — and the answer comes back blurry.",
+    meta:"MAR 2025 · BRAND BREAKDOWN · 7 MIN READ",
+    body:`<p>That's the actual problem. Not effort. Not taste. <strong>Blurriness.</strong></p>
+    <p>The real fight isn't just on the street — it's in the customer's mind. If you don't own a clear slot in someone's head, you get treated like a "maybe." And "maybe" is where businesses quietly die.</p>
+    <h2>The Move Most Brands Avoid</h2>
+    <p>Clarity forces a real decision:</p>
+    <ul><li>Who is this actually for?</li><li>What situation is it built for?</li><li>What kind of customer is it <strong>not</strong> trying to win?</li></ul>
+    <p>That last part is where most local brands freeze. <strong>Exclusion isn't a personality trait. It's the cost of being clear.</strong></p>
+    <h2>Why Small Towns Punish "Nice and General"</h2>
+    <p>In smaller markets, big brands undercut you on price and outspend you on attention. If you don't differentiate enough, you're competing in a game you can't win. Differentiation is how a small business earns the right to charge more without constantly explaining itself.</p>
+    <h2>The Boutique That Gets Squeezed</h2>
+    <p>Boutique opens. Good lighting. Clean racks. "Curated pieces. Something for everyone." Someone goes to Winners, finds something close enough, pays half. Not because the boutique is worse — because it never gave people a reason to choose it that a chain can't copy.</p>
+    <p>Now imagine one clear decision: <em>"We build complete outfits for people who hate shopping."</em> A 10-minute outfit build. One rack of work fits under $200. That boutique just excluded browsing-for-fun customers. Doesn't matter — <strong>those customers were never going to pay boutique margins anyway.</strong></p>
+    <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>`
+  },
+  "everything-is-cultural": {
+    issue:"Issue 003 · Culture & Identity",
+    title:"Everything Is Cultural",
+    subtitle:"A café isn't selling coffee. It's selling a room people want to belong to. And that room broadcasts values whether you like it or not.",
+    meta:"MAR 2025 · BRAND BREAKDOWN · 6 MIN READ",
+    body:`<p>"Keeping politics out of business" usually means: don't make me commit. But customers commit all the time — they choose spaces that match how they see themselves. <strong>Culture isn't a side topic. It's the operating system.</strong></p>
+    <h2>Neutral Is Not Mature. Neutral Is Anonymous.</h2>
+    <p>"Neutral" businesses feel replaceable. Built to offend nobody, which means they excite nobody. Clean, safe, forgettable — like a waiting room with better lighting. Chains can afford replaceable. You can't.</p>
+    <h2>The Campus Café</h2>
+    <p>Students pick places the same way they pick playlists: by identity. If the café is aesthetically clean but culturally blank, students don't think "classy." They think: <em>this place has no pulse.</em> Then they find a café with a pulse and make it their spot.</p>
+    <p>Make one decision: align the space with who you want inside it. Host events your core audience resonates with. Let the walls say something. Some customers will be performative about it. <strong>Great. Performative spreads. Spread brings people. People turn into habits.</strong> That's distribution.</p>
+    <p><strong>If your space stands for nothing, don't be surprised when nobody stands with it.</strong></p>
+    <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>`
+  },
+  "instagram-is-your-receipt": {
+    issue:"Issue 004 · Social Media",
+    title:"Your Instagram Is Your Receipt",
+    subtitle:"Instagram doesn't make you a brand. It exposes what you've been doing. It's not your identity. It's your paper trail.",
+    meta:"MAR 2025 · BRAND BREAKDOWN · 5 MIN READ",
+    body:`<p>And a lot of local business receipts read like a coping mechanism: "Good vibes." "Community." "New drop." That's not marketing. That's narration.</p>
+    <h2>A Pretty Feed Is the New "Open" Sign</h2>
+    <p>Good lighting, clean fonts, smooth reels — everyone has that now. Aesthetic is not a differentiator. It's the minimum to be taken seriously for two seconds before someone keeps scrolling.</p>
+    <h2>The Receipt Test</h2>
+    <p>If a stranger scrolls your last 12 posts and can't answer <em>what is this place known for?</em> — you're invisible. Not "what do they sell." <strong>What are they known for?</strong> That's what gets recommended. That's what becomes a default choice.</p>
+    <h2>Same Product, Different Receipt</h2>
+    <p>Café A: "cozy vibes ☕️✨"<br>Café B: "open late for students. quiet tables. no music. 10pm–11pm is the reason we exist."</p>
+    <p>Same coffee. Different receipt. One documents aesthetics. The other documents <strong>a reason</strong>. Reasons travel.</p>
+    <p>A lot of businesses use Instagram like a mirror: "look at us." Customers use it like a filter: <em>is this for me?</em> If your feed can't filter, it can only beg. Instagram is not your brand. It's the evidence you leave behind.</p>
+    <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>`
+  }
+  // ADD NEW ARTICLES BELOW — copy pattern above, give unique key
 };
 
 function openArticle(id) {
   const a = ARTICLES[id];
   if (!a) return;
   document.getElementById('articleContent').innerHTML = `
-    <button class="article-back" onclick="closeArticle()">← Back to Signal</button>
+    <button class="overlay-back" onclick="closeArticle()">← Back to Signal</button>
     <div class="article-overlay-issue">${a.issue}</div>
     <h1>${a.title}</h1>
     <p class="article-overlay-sub">${a.subtitle}</p>
     <div class="article-overlay-meta">${a.meta}</div>
-    <div class="article-overlay-body">${a.body}</div>
+    <div class="article-body">${a.body}</div>
   `;
-  const overlay = document.getElementById('articleOverlay');
-  overlay.classList.add('open');
-  overlay.scrollTop = 0;
+  const ov = document.getElementById('articleOverlay');
+  ov.classList.add('open');
+  ov.scrollTop = 0;
   document.body.style.overflow = 'hidden';
 }
 function closeArticle() {
   document.getElementById('articleOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
-document.querySelectorAll('.article-card[data-article]').forEach(c => c.addEventListener('click', () => openArticle(c.dataset.article)));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
 
+document.querySelectorAll('.article-card[data-article]').forEach(c => c.addEventListener('click', () => openArticle(c.dataset.article)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeArticle(); closeCS(); } });
+
+// Cursor
 const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-document.querySelectorAll('a, button, .article-card, .service-card, .value-row, .signal-cta, .work-card').forEach(el => {
+document.addEventListener('mousemove', e => { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; });
+document.querySelectorAll('a,button,.article-card,.service-card,.value-row,.signal-cta,.work-card,.work-card-wide').forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
 });
 
 window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60));
 
-const bg = document.getElementById('staticBg');
-for (let i = 0; i < 20; i++) {
-  const l = document.createElement('div');
-  l.className = 'static-line';
-  l.style.top = Math.random() * 100 + '%';
-  l.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
-  l.style.setProperty('--shift', (Math.random() * 20 - 10) + 'px');
-  l.style.animationDelay = (Math.random() * 4) + 's';
-  bg.appendChild(l);
-}
-</script>
-</body>
-</html>
+// Static lines
+const
