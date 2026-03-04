@@ -20,9 +20,9 @@
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--off-white); font-family: 'Instrument Serif', serif; overflow-x: hidden; cursor: none; }
   * { cursor: none !important; }
-  .cursor { position: fixed; width: 12px; height: 12px; background: var(--acid); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease; opacity: 0; top: -20px; left: -20px; }
+  .cursor { position: fixed; width: 12px; height: 12px; background: #4fc3f7; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease; opacity: 0; top: -20px; left: -20px; }
   .cursor.visible { opacity: 1; }
-  .cursor.expand { width: 36px; height: 36px; background: transparent; border: 2px solid var(--acid); }
+  .cursor.expand { width: 36px; height: 36px; background: transparent; border: 2px solid #4fc3f7; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9990; opacity: 0.5; }
 
   /* NAV */
@@ -514,8 +514,8 @@
   </div>
   <div class="cta-right">
     <a href="https://calendly.com/pratnair44/30min" target="_blank" class="cta-btn cta-btn-primary">Book Free Audit →</a>
-    <a href="/cdn-cgi/l/email-protection#45353724312b242c377171052228242c296b262a28" class="cta-btn cta-btn-secondary">Just Say Hello</a>
-    <div class="cta-note"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cdbdbfacb9a3aca4bff9f98daaa0aca4a1e3aea2a0">[email&#160;protected]</a></div>
+    <a href="mailto:pratnair44@gmail.com" class="cta-btn cta-btn-secondary">Just Say Hello</a>
+    <div class="cta-note">pratnair44@gmail.com</div>
   </div>
 </div>
 
@@ -532,7 +532,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="https://www.linkedin.com/in/pratyushrameshnair/" target="_blank">LinkedIn</a></li>
-      <li><a href="/cdn-cgi/l/email-protection#067674677268676f74323246616b676f6a2865696b">Contact</a></li>
+      <li><a href="mailto:pratnair44@gmail.com">Contact</a></li>
     </ul>
   </div>
   <div class="footer-bottom">
@@ -542,7 +542,6 @@
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
 // ============================================================
 // CASE STUDIES
 // ============================================================
@@ -808,13 +807,18 @@ function closeArticle() {
   document.body.style.overflow = '';
 }
 
+// ============================================================
+// DOM READY — event listeners only (functions above are global)
+// ============================================================
+window.addEventListener('load', function() {
+
 document.querySelectorAll('.article-card[data-article]').forEach(c => c.addEventListener('click', () => openArticle(c.dataset.article)));
+
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeArticle(); closeCS(); } });
 
 // Cursor
 const cursor = document.getElementById('cursor');
 let mouseX = -20, mouseY = -20;
-
 document.addEventListener('mousemove', e => {
   mouseX = e.clientX;
   mouseY = e.clientY;
@@ -822,15 +826,29 @@ document.addEventListener('mousemove', e => {
   cursor.style.top = mouseY + 'px';
   cursor.classList.add('visible');
 });
-
 document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
 document.addEventListener('mouseenter', () => cursor.classList.add('visible'));
-
 document.querySelectorAll('a, button, .article-card, .service-card, .value-row, .signal-cta, .work-card, .work-card-wide').forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
 });
-}); // end DOMContentLoaded
+
+// Nav scroll
+window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60));
+
+// Static hero lines
+const bg = document.getElementById('staticBg');
+for (let i = 0; i < 20; i++) {
+  const l = document.createElement('div');
+  l.className = 'static-line';
+  l.style.top = Math.random()*100+'%';
+  l.style.setProperty('--dur',(2+Math.random()*4)+'s');
+  l.style.setProperty('--shift',(Math.random()*20-10)+'px');
+  l.style.animationDelay = (Math.random()*4)+'s';
+  bg.appendChild(l);
+}
+
+}); // end load
 </script>
 </body>
 </html>
