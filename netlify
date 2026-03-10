@@ -1,10 +1,15 @@
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Robots-Tag = "index, follow"
-
 [build]
   publish = "."
 
-[[plugins]]
-# Disable Cloudflare email obfuscation that injects scripts and breaks JS
+# Disable Cloudflare/Netlify email obfuscation
+# This prevents script injection that breaks JavaScript scope
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
