@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STATIC — We Make Noise That Means Something</title>
+<title>STATIC — Making Noise That Means Something</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -19,14 +19,13 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--off-white); font-family: 'Instrument Serif', serif; overflow-x: hidden; cursor: none; }
-  * { cursor: none !important; }
-  .cursor { position: fixed; width: 12px; height: 12px; background: #4fc3f7; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease; opacity: 0; top: -20px; left: -20px; }
-  .cursor.visible { opacity: 1; }
-  .cursor.expand { width: 36px; height: 36px; background: transparent; border: 2px solid #4fc3f7; }
+  *, *::before, *::after, a, button, input, select, textarea { cursor: none !important; }
+  .cursor { position: fixed; width: 10px; height: 10px; background: #4fc3f7; border-radius: 50%; pointer-events: none; z-index: 99999; left: -20px; top: -20px; transition: width 0.15s ease, height 0.15s ease, border-radius 0.15s ease; }
+  .cursor.expand { width: 32px; height: 32px; background: transparent; border: 2px solid #4fc3f7; border-radius: 50%; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9990; opacity: 0.5; }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; transition: border-color 0.3s, background 0.3s; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; transition: border-color 0.3s, background 0.3s; }
   nav.scrolled { border-bottom: 1px solid var(--border); background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); }
   .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 4px; color: var(--off-white); text-decoration: none; }
   .nav-logo span { color: var(--acid); }
@@ -280,12 +279,12 @@
   <div class="static-bg" id="staticBg"></div>
   <div class="hero-eyebrow">// Thunder Bay · Mumbai · Est. 2025 · Marketing That Stays With You</div>
   <h1 class="hero-title">
-    <div>WE MAKE</div>
+    <div>MAKING</div>
     <div class="line-2">NOISE THAT</div>
     <div class="line-3">MEANS SOMETHING.</div>
   </h1>
   <div class="hero-bottom">
-    <p class="hero-desc">Most brands are trying to be <strong>seen</strong>.<br>I build brands that are <strong>remembered</strong>.<br>There's a difference. It lives in the static.</p>
+    <p class="hero-desc">Most brands are trying to be <strong>seen</strong>.<br>I think that's the wrong goal.<br>This is about being <strong>remembered</strong>. There's a difference. It lives in the static.</p>
     <div class="hero-scroll"><div class="scroll-line"></div>Scroll to tune in</div>
   </div>
 </section>
@@ -312,30 +311,30 @@
 <!-- MANIFESTO -->
 <section class="manifesto" id="manifesto">
   <div class="section-tag">// 01 — The Position</div>
-  <h2 class="section-title">WHY WE<br>EXIST</h2>
+  <h2 class="section-title">WHY I<br>STARTED THIS</h2>
   <div class="manifesto-grid">
     <div class="manifesto-col" data-num="01">
-      <h3>What We Aim To Do</h3>
-      <div class="col-sub">Our mission, plainly stated</div>
-      <p>I study brands the way a critic studies film — with <strong>genuine obsession and zero sentimentality.</strong> I look for what's invisible, what's working underneath the surface, and what's quietly leaking value.</p>
-      <p>Then I say it out loud. Clearly. Without softening it.</p>
+      <h3>What I Do</h3>
+      <div class="col-sub">Plainly stated</div>
+      <p>I look at brands the way most people look at things they can't stop thinking about. What's actually working. What's quietly bleeding. What nobody's saying out loud yet.</p>
+      <p>Then I try to name those things clearly — even when it's not what someone was expecting to hear.</p>
       <ul>
         <li>Identify what your brand actually communicates vs. what you think it does</li>
         <li>Find the gap between the audience you have and the audience you deserve</li>
         <li>Build marketing that leaves a mark, not just an impression</li>
-        <li>Tell you the thing your last agency was afraid to say</li>
+        <li>Say the thing that's true, even if it's inconvenient</li>
       </ul>
     </div>
     <div class="manifesto-col" data-num="02">
-      <h3>What Brands Should Do</h3>
-      <div class="col-sub">The uncomfortable truth</div>
-      <p>Your brand narrative is not yours to ignore. <strong>The market will write it for you</strong> the moment you stop. And the version they write is rarely flattering.</p>
-      <p>Brands that last don't just respond to culture — they <strong>move before it does.</strong> That takes nerve, not just a content calendar.</p>
+      <h3>What I Actually Believe</h3>
+      <div class="col-sub">The honest version</div>
+      <p>Your brand narrative doesn't wait for you. <strong>The market writes it the moment you stop.</strong> And the version they write is rarely the one you wanted.</p>
+      <p>The brands that last aren't just reacting to culture — they're <strong>moving before it does.</strong> That takes a genuine point of view, not just a content calendar.</p>
       <ul>
-        <li>Stop optimising for reach and start optimising for recall</li>
+        <li>Reach is rented. Recall is owned. Optimise accordingly</li>
         <li>Own a feeling, not just a category</li>
-        <li>Let your actual point of view show — audiences smell the absence of one</li>
-        <li>Treat every touchpoint as a vote for what your brand believes</li>
+        <li>Audiences can smell the absence of a real point of view</li>
+        <li>Every touchpoint is a vote for what your brand actually stands for</li>
       </ul>
     </div>
   </div>
@@ -352,12 +351,22 @@
   </div>
   <div class="signal-grid">
     <!-- ===== ARTICLE CARD — COPY FROM HERE ===== -->
-    <div class="article-card featured" data-article="clarity-requires-exclusion">
+    <div class="article-card featured" data-article="hunger-that-built-you">
+      <div class="card-issue">Issue 005 · Local Business</div>
+      <div class="card-tag">Small Cities · Brand Complacency</div>
+      <h3>The Hunger That Built You</h3>
+      <p>Every small city in Canada has one. The local brand that caught fire, got claimed, and slowly stopped being the thing people were loyal to. Most of them end the same way.</p>
+      <div class="card-meta">MAR 2026 · 7 MIN READ</div>
+    </div>
+    <!-- ===== ARTICLE CARD — COPY TO HERE ===== -->
+
+    <!-- ===== ARTICLE CARD — COPY FROM HERE ===== -->
+    <div class="article-card" data-article="clarity-requires-exclusion">
       <div class="card-issue">Issue 002 · Brand Strategy</div>
       <div class="card-tag">Positioning · Local Business</div>
       <h3>Clarity Requires Exclusion</h3>
       <p>A lot of local businesses look polished now. But ask one question — what are they known for? — and the answer comes back blurry. That's the real problem.</p>
-      <div class="card-meta">MAR 2025 · 7 MIN READ</div>
+      <div class="card-meta">MAR 2026 · 7 MIN READ</div>
     </div>
     <!-- ===== ARTICLE CARD — COPY TO HERE ===== -->
 
@@ -367,7 +376,7 @@
       <div class="card-tag">Identity · Local Business</div>
       <h3>Everything Is Cultural</h3>
       <p>A café isn't selling coffee. It's selling a room people want to belong to. Neutral isn't professional — it's anonymous.</p>
-      <div class="card-meta">MAR 2025 · 6 MIN READ</div>
+      <div class="card-meta">MAR 2026 · 6 MIN READ</div>
     </div>
     <!-- ===== ARTICLE CARD — COPY TO HERE ===== -->
 
@@ -377,7 +386,7 @@
       <div class="card-tag">Social Media · Local Business</div>
       <h3>Your Instagram Is Your Receipt</h3>
       <p>Instagram doesn't make you a brand. It exposes what you've been doing. And a lot of receipts read like a coping mechanism.</p>
-      <div class="card-meta">MAR 2025 · 5 MIN READ</div>
+      <div class="card-meta">MAR 2026 · 5 MIN READ</div>
     </div>
     <!-- ===== ARTICLE CARD — COPY TO HERE ===== -->
 
@@ -387,7 +396,7 @@
       <div class="card-tag">Thunder Bay · Bar & Eatery</div>
       <h3>The City You Forgot You Wanted</h3>
       <p>How Pocketchange built the bar Thunder Bay didn't know it was waiting for — and why the gap between brand and crowd is the whole story.</p>
-      <div class="card-meta">MAR 2025 · 6 MIN READ</div>
+      <div class="card-meta">MAR 2026 · 6 MIN READ</div>
     </div>
     <!-- ===== ARTICLE CARD — COPY TO HERE ===== -->
 
@@ -462,26 +471,26 @@
 
 <!-- SERVICES -->
 <section class="services" id="services">
-  <div class="section-tag">// 04 — How We Can Help</div>
+  <div class="section-tag">// 04 — How I Can Help</div>
   <h2 class="section-title">THE WORK</h2>
   <div class="services-grid">
     <div class="service-card">
       <div class="service-num">01 ——</div>
       <h3>Brand Audit</h3>
-      <p>A 30-minute session where I look at your brand with <strong>completely honest eyes.</strong> What you're saying. What you're not. What the market is probably hearing instead.</p>
-      <p>No sales pitch. No agenda. Just the read.</p>
+      <p>A 30-minute conversation where I share what I genuinely see — what's landing, what isn't, and what I'd be thinking about if it were mine.</p>
+      <p>No pitch. No invoice. Just an honest look.</p>
       <div class="service-footer">Free to start</div>
     </div>
     <div class="service-card">
       <div class="service-num">02 ——</div>
       <h3>Brand Strategy</h3>
-      <p>For businesses that know something is off but can't name it. I <strong>diagnose the disconnect</strong> between who you are, who you say you are, and who your audience thinks you are.</p>
+      <p>For when something feels off but you can't quite name it yet. I help find the gap between what a brand means to say and what people actually hear.</p>
       <div class="service-footer">Let's talk scope</div>
     </div>
     <div class="service-card">
       <div class="service-num">03 ——</div>
       <h3>Social & Content</h3>
-      <p>Content that doesn't just look good in the grid. Content that <strong>makes people stop, think, and remember.</strong> Built around a genuine point of view — not a posting schedule.</p>
+      <p>Content built around something real to say, not a posting schedule. The goal is recall, not reach — and those require completely different approaches.</p>
       <div class="service-footer">Let's talk scope</div>
     </div>
   </div>
@@ -491,7 +500,7 @@
 <section class="about" id="about">
   <div class="about-left">
     <div class="section-tag">// 05 — About Static</div>
-    <p class="about-statement">I have a <strong>disproportionately large opinion</strong> about what marketing should be doing — and almost never is.<br><br>I believe most brands are beautiful and <em>forgettable</em>. I'm here to fix the second part.<br><br>One person. Sharp eyes. Based in Thunder Bay. Originally from Mumbai. Thinking about everywhere else.</p>
+    <p class="about-statement">I started Static because I kept noticing the same thing — brands with something <strong>real to say</strong>, communicating in ways that made them easy to ignore. That bothered me enough to do something about it.<br><br>One person. One point of view. Genuinely curious about why some brands stick and most <em>don't</em>.<br><br>Based in Thunder Bay. Originally from Mumbai. Thinking about everywhere else.</p>
     <a href="https://www.linkedin.com/in/pratyushrameshnair/" target="_blank" style="display:inline-flex;align-items:center;gap:10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#bbb;border:1px solid #333;padding:12px 20px;text-decoration:none;margin-bottom:32px;transition:all 0.2s;" onmouseover="this.style.color='#c8ff00';this.style.borderColor='#c8ff00'" onmouseout="this.style.color='#bbb';this.style.borderColor='#333'">↗ Pratyush Nair on LinkedIn</a>
     <div class="about-values">
       <div class="value-row"><span class="value-name">Memory > Beauty</span><span class="value-note">What sticks matters more than what shines</span></div>
@@ -510,7 +519,7 @@
 <div class="cta-section" id="consult">
   <div class="cta-left">
     <h2>LET'S FIND<br>YOUR SIGNAL.</h2>
-    <p>Book a free 30-minute brand audit. No pitch, no invoice. Just an honest look at where you are and what's possible — from one person who will actually tell you the truth.</p>
+    <p>Book a free 30-minute conversation. No pitch, no invoice. Just an honest look at where you are and what's possible.</p>
   </div>
   <div class="cta-right">
     <a href="https://calendly.com/pratnair44/30min" target="_blank" class="cta-btn cta-btn-primary">Book Free Audit →</a>
@@ -536,7 +545,7 @@
     </ul>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Static. All rights reserved.</div>
+    <div class="footer-copy">© 2026 Static. All rights reserved.</div>
     <div class="footer-cities"><span>Mumbai</span> · Thunder Bay · Everywhere Else</div>
   </div>
 </footer>
@@ -715,6 +724,11 @@ function closeCS() {
   document.body.style.overflow = '';
 }
 
+// Explicitly assign to window so inline onclick always finds them
+// regardless of any third-party scripts Netlify/Cloudflare inject
+window.openCS = openCS;
+window.closeCS = closeCS;
+
 // ============================================================
 // ARTICLES
 // ============================================================
@@ -723,7 +737,7 @@ const ARTICLES = {
     issue:"Issue 001 · Thunder Bay · Bar & Eatery",
     title:"The City You Forgot You Wanted",
     subtitle:"How Pocketchange built the bar Thunder Bay didn't know it was waiting for — and why the gap between their brand and their crowd is the whole story.",
-    meta:"MAR 2025 · BUSINESS PROFILE · 6 MIN READ",
+    meta:"MAR 2026 · BUSINESS PROFILE · 6 MIN READ",
     body:`<p>There's a specific feeling that hits you when you walk into Pocketchange. It takes a second to place it, because it doesn't quite belong here — and that's exactly the point.</p>
     <p>Thunder Bay is a city with a lot of good things going for it. It is not, historically, a city known for its nightlife sophistication. Which makes what Pocketchange has done even more interesting. They didn't try to make Thunder Bay something it isn't. They simply imported a frequency — the specific energy of a cool, considered, slightly-too-aware-of-itself bar — and turned it on in a room where nobody was expecting it. <strong>It worked.</strong></p>
     <h2>The Product Is the Feeling</h2>
@@ -739,7 +753,7 @@ const ARTICLES = {
     issue:"Issue 002 · Brand Strategy",
     title:"Clarity Requires Exclusion",
     subtitle:"A lot of local businesses look polished now. But ask one question — what are they known for? — and the answer comes back blurry.",
-    meta:"MAR 2025 · BRAND BREAKDOWN · 7 MIN READ",
+    meta:"MAR 2026 · BRAND BREAKDOWN · 7 MIN READ",
     body:`<p>That's the actual problem. Not effort. Not taste. <strong>Blurriness.</strong></p>
     <p>The real fight isn't just on the street — it's in the customer's mind. If you don't own a clear slot in someone's head, you get treated like a "maybe." And "maybe" is where businesses quietly die.</p>
     <h2>The Move Most Brands Avoid</h2>
@@ -757,7 +771,7 @@ const ARTICLES = {
     issue:"Issue 003 · Culture & Identity",
     title:"Everything Is Cultural",
     subtitle:"A café isn't selling coffee. It's selling a room people want to belong to. And that room broadcasts values whether you like it or not.",
-    meta:"MAR 2025 · BRAND BREAKDOWN · 6 MIN READ",
+    meta:"MAR 2026 · BRAND BREAKDOWN · 6 MIN READ",
     body:`<p>"Keeping politics out of business" usually means: don't make me commit. But customers commit all the time — they choose spaces that match how they see themselves. <strong>Culture isn't a side topic. It's the operating system.</strong></p>
     <h2>Neutral Is Not Mature. Neutral Is Anonymous.</h2>
     <p>"Neutral" businesses feel replaceable. Built to offend nobody, which means they excite nobody. Clean, safe, forgettable — like a waiting room with better lighting. Chains can afford replaceable. You can't.</p>
@@ -771,7 +785,7 @@ const ARTICLES = {
     issue:"Issue 004 · Social Media",
     title:"Your Instagram Is Your Receipt",
     subtitle:"Instagram doesn't make you a brand. It exposes what you've been doing. It's not your identity. It's your paper trail.",
-    meta:"MAR 2025 · BRAND BREAKDOWN · 5 MIN READ",
+    meta:"MAR 2026 · BRAND BREAKDOWN · 5 MIN READ",
     body:`<p>And a lot of local business receipts read like a coping mechanism: "Good vibes." "Community." "New drop." That's not marketing. That's narration.</p>
     <h2>A Pretty Feed Is the New "Open" Sign</h2>
     <p>Good lighting, clean fonts, smooth reels — everyone has that now. Aesthetic is not a differentiator. It's the minimum to be taken seriously for two seconds before someone keeps scrolling.</p>
@@ -783,6 +797,42 @@ const ARTICLES = {
     <p>A lot of businesses use Instagram like a mirror: "look at us." Customers use it like a filter: <em>is this for me?</em> If your feed can't filter, it can only beg. Instagram is not your brand. It's the evidence you leave behind.</p>
     <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>`
   }
+  "hunger-that-built-you": {
+    issue: "Issue 005 · Local Business · Small Cities",
+    title: "The Hunger That Built You",
+    subtitle: "Every small city in Canada has one. Most of them end the same way.",
+    meta: "MAR 2026 · BRAND BREAKDOWN · 7 MIN READ",
+    body: `
+      <p>There's a specific kind of grief that hits a city when a local institution closes.</p>
+      <p>Not the grief of losing something bad. The grief of losing something that used to be good and somewhere along the way, quietly stopped being it.</p>
+      <p>Sleeping Giant Brewing Company is closing. If you're from Thunder Bay, you already know. You probably have a memory attached to it. A first pint, a summer patio, a night that went longer than planned. That's real. That matters.</p>
+      <p>But this isn't really about Thunder Bay. And it isn't really about beer.</p>
+      <p>Every mid-sized Canadian city has a version of this story. The restaurant that was impossible to get into for three years and is now just... fine. The bar that felt like a discovery and now feels like a habit nobody's sure they want. The brewery, the boutique, the café that the city claimed as its own and then watched quietly fade while still insisting it was great.</p>
+      <p>The pattern is everywhere. It just doesn't get named clearly enough to stop it.</p>
+      <p><strong>The hunger that builds a local brand is rarely the hunger that sustains one.</strong></p>
+      <h2>The Comfort Trap</h2>
+      <p>Here's what actually happens to local brands that catch fire.</p>
+      <p>They do something real. A product people actually wanted, a vibe that didn't exist yet, a space that felt like it belonged to the people inside it. The city discovers it. Word spreads the way only small-city word spreads. Fast, personal, loyal. The identity crystallizes.</p>
+      <p>And then, slowly, they stop doing the thing that made them worth talking about.</p>
+      <p>It's never a decision. That's the insidious part. Nobody sits down and says let's stop being interesting. It happens through comfort. Staff gets added. Processes get built. The founders' attention splits seventeen ways. The original customers become regulars, and regulars get taken for granted. The menu stops evolving because the current one moves fine. The events get templated because the last format filled the room.</p>
+      <p>What looks like stability is drift. What feels like maturity is coasting.</p>
+      <p>And here's the part that stings: the locals keep showing up out of loyalty long after the thing they were loyal to has already left. They're essentially subsidising a brand's slow decline with their goodwill, buying time that the business rarely uses well.</p>
+      <p>The signs are always there before the announcement. A feed that stopped trying. A room that stopped buzzing. A product that stopped surprising. Somewhere between the recognition and the routine, the hunger quietly left the building. No meeting was called. No decision was made. It just happened. The way all slow disasters happen. Gradually, then suddenly.</p>
+      <h2>Your Locals Will Always Support You. Until They Won't.</h2>
+      <p>Small cities are extraordinarily loyal to the brands they claim. It's one of the genuinely beautiful things about them. Thunder Bay claimed SGBC. Sudbury has its version. Kelowna has its version. Every mid-sized city in this country has a local institution they put on their identity like a badge. Proof that this place produces things worth caring about.</p>
+      <p>But loyalty has a grammar. It goes:</p>
+      <p><strong>Dollars. Likes. "Sad to see it go."</strong></p>
+      <p>The transition from dollars to likes is quiet. It happens without announcement, without confrontation. People don't stop loving the brand. They just stop showing up for it, because the brand stopped giving them a reason to. They still tag it. They still say it's great. They do that from their couch, or from the newer place down the street that's still hungry.</p>
+      <p>By the time the closure hits, the comments fill up with people who haven't walked through the door in eighteen months expressing genuine devastation. That grief is real. But it arrived too late to matter.</p>
+      <h2>What This Is Actually About</h2>
+      <p>It's not about IPAs being too hoppy. It's not about people being too broke to go out, though that's real too. It's not entirely about mismanagement, though that plays a role in most of these stories.</p>
+      <p>It's about the fact that the work of staying relevant is identical to the work of becoming relevant. It never stops. There's no point at which you've earned the right to coast. And in small cities especially, where the market is smaller and the margin for drift is thinner, that lesson hits harder and faster than it does anywhere else.</p>
+      <p>The hunger that built you is not a phase you graduate from. It's the job. The brands that survive, in Thunder Bay, in Timmins, in Medicine Hat, in every city where the local favourite eventually stops feeling local, are the ones that never mistake recognition for permission to stop.</p>
+      <p>The next local brand that catches fire in your city should read this and feel something uncomfortable. That discomfort is useful. That's what the first version of every great local business ran on.</p>
+      <p>Don't let it go quiet.</p>
+      <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>
+    `
+  },
   // ADD NEW ARTICLES BELOW — copy pattern above, give unique key
 };
 
@@ -807,6 +857,10 @@ function closeArticle() {
   document.body.style.overflow = '';
 }
 
+// Explicitly assign to window
+window.openArticle = openArticle;
+window.closeArticle = closeArticle;
+
 // ============================================================
 // DOM READY — event listeners only (functions above are global)
 // ============================================================
@@ -816,21 +870,17 @@ document.querySelectorAll('.article-card[data-article]').forEach(c => c.addEvent
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeArticle(); closeCS(); } });
 
-// Cursor
+// Cursor - simple direct tracking
 const cursor = document.getElementById('cursor');
-let mouseX = -20, mouseY = -20;
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
-  cursor.classList.add('visible');
+
+document.addEventListener('mousemove', function(e) {
+  cursor.style.left = (e.clientX - 5) + 'px';
+  cursor.style.top = (e.clientY - 5) + 'px';
 });
-document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
-document.addEventListener('mouseenter', () => cursor.classList.add('visible'));
-document.querySelectorAll('a, button, .article-card, .service-card, .value-row, .signal-cta, .work-card, .work-card-wide').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+
+document.querySelectorAll('a, button, .article-card, .service-card, .value-row, .signal-cta, .work-card, .work-card-wide').forEach(function(el) {
+  el.addEventListener('mouseenter', function() { cursor.classList.add('expand'); });
+  el.addEventListener('mouseleave', function() { cursor.classList.remove('expand'); });
 });
 
 // Nav scroll
@@ -839,16 +889,4 @@ window.addEventListener('scroll', () => document.getElementById('nav').classList
 // Static hero lines
 const bg = document.getElementById('staticBg');
 for (let i = 0; i < 20; i++) {
-  const l = document.createElement('div');
-  l.className = 'static-line';
-  l.style.top = Math.random()*100+'%';
-  l.style.setProperty('--dur',(2+Math.random()*4)+'s');
-  l.style.setProperty('--shift',(Math.random()*20-10)+'px');
-  l.style.animationDelay = (Math.random()*4)+'s';
-  bg.appendChild(l);
-}
-
-}); // end load
-</script>
-</body>
-</html>
+  const l = document.createEl
