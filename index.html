@@ -796,7 +796,7 @@ const ARTICLES = {
     <p>Same coffee. Different receipt. One documents aesthetics. The other documents <strong>a reason</strong>. Reasons travel.</p>
     <p>A lot of businesses use Instagram like a mirror: "look at us." Customers use it like a filter: <em>is this for me?</em> If your feed can't filter, it can only beg. Instagram is not your brand. It's the evidence you leave behind.</p>
     <div class="article-tagline">DEMAND GROWS WHERE DEFINITION EXISTS.</div>`
-  }
+  },
   "hunger-that-built-you": {
     issue: "Issue 005 · Local Business · Small Cities",
     title: "The Hunger That Built You",
@@ -881,6 +881,7 @@ document.addEventListener('mousemove', function(e) {
 document.querySelectorAll('a, button, .article-card, .service-card, .value-row, .signal-cta, .work-card, .work-card-wide').forEach(function(el) {
   el.addEventListener('mouseenter', function() { cursor.classList.add('expand'); });
   el.addEventListener('mouseleave', function() { cursor.classList.remove('expand'); });
+}); // end forEach hover
 
 // Nav scroll
 window.addEventListener('scroll', function() {
