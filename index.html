@@ -523,8 +523,8 @@
   </div>
   <div class="cta-right">
     <a href="https://calendly.com/pratnair44/30min" target="_blank" class="cta-btn cta-btn-primary">Book Free Audit →</a>
-    <a href="mailto:pratnair44@gmail.com" class="cta-btn cta-btn-secondary">Just Say Hello</a>
-    <div class="cta-note">pratnair44@gmail.com</div>
+    <a href="/cdn-cgi/l/email-protection#e8989a899c8689819adcdca88f85898184c68b8785" class="cta-btn cta-btn-secondary">Just Say Hello</a>
+    <div class="cta-note"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cabab8abbea4aba3b8fefe8aada7aba3a6e4a9a5a7">[email&#160;protected]</a></div>
   </div>
 </div>
 
@@ -541,7 +541,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="https://www.linkedin.com/in/pratyushrameshnair/" target="_blank">LinkedIn</a></li>
-      <li><a href="mailto:pratnair44@gmail.com">Contact</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#39494b584d5758504b0d0d795e54585055175a5654">Contact</a></li>
     </ul>
   </div>
   <div class="footer-bottom">
@@ -881,12 +881,25 @@ document.addEventListener('mousemove', function(e) {
 document.querySelectorAll('a, button, .article-card, .service-card, .value-row, .signal-cta, .work-card, .work-card-wide').forEach(function(el) {
   el.addEventListener('mouseenter', function() { cursor.classList.add('expand'); });
   el.addEventListener('mouseleave', function() { cursor.classList.remove('expand'); });
-});
 
 // Nav scroll
-window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60));
+window.addEventListener('scroll', function() {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
 
 // Static hero lines
 const bg = document.getElementById('staticBg');
-for (let i = 0; i < 20; i++) {
-  const l = document.createEl
+for (var i = 0; i < 20; i++) {
+  var l = document.createElement('div');
+  l.className = 'static-line';
+  l.style.top = Math.random()*100+'%';
+  l.style.setProperty('--dur',(2+Math.random()*4)+'s');
+  l.style.setProperty('--shift',(Math.random()*20-10)+'px');
+  l.style.animationDelay = (Math.random()*4)+'s';
+  bg.appendChild(l);
+}
+
+}); // end load
+</script>
+</body>
+</html>
