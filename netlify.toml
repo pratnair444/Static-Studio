@@ -1,15 +1,16 @@
 [build]
   publish = "."
-
-# Disable Cloudflare/Netlify email obfuscation
-# This prevents script injection that breaks JavaScript scope
+  functions = "netlify/functions"
+ 
 [build.processing]
   skip_processing = false
-
+ 
 [build.processing.html]
   pretty_urls = true
-
+ 
 [[headers]]
   for = "/*"
   [headers.values]
+    Access-Control-Allow-Origin = "*"
     X-Content-Type-Options = "nosniff"
+ 
