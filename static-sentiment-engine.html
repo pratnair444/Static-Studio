@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STATIC — Sentiment Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --off-white: #f0ebe0;
+  --acid: #c8ff00;
+  --warm: #ff8c42;
+  --border: #1e1e1e;
+  --dim: #555;
+  --mid: #0e0e0e;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--black); color: var(--off-white); font-family: 'Instrument Serif', serif; min-height: 100vh; cursor: none; }
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+.cursor { position: fixed; width: 10px; height: 10px; background: #4fc3f7; border-radius: 50%; pointer-events: none; z-index: 99999; left: -20px; top: -20px; transition: width 0.15s, height 0.15s; }
+.cursor.expand { width: 28px; height: 28px; background: transparent; border: 2px solid #4fc3f7; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 48px; border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.97);
+}
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--off-white); letter-spacing: 3px; text-decoration: none; }
+.nav-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; }
+.nav-tag span { color: var(--acid); }
+
+main { padding: 120px 48px 80px; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+
+.header { margin-bottom: 48px; }
+.eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--acid); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 80px); line-height: 0.9; color: var(--off-white); margin-bottom: 20px; }
+.title span { color: var(--acid); }
+.desc { font-size: 15px; line-height: 1.8; color: var(--dim); max-width: 560px; font-style: italic; }
+.desc strong { color: #888; font-style: normal; }
+
+.panel { background: var(--mid); border: 1px solid var(--border); padding: 36px; margin-bottom: 2px; }
+.panel-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--acid); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.panel-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.field label { font-family: 'DM Mono', monospace; font-size: 9px; color: #444; letter-spacing: 2px; text-transform: uppercase; }
+.field input {
+  background: transparent; border: none; border-bottom: 1px solid var(--border);
+  color: var(--off-white); font-family: 'Instrument Serif', serif; font-size: 20px;
+  padding: 10px 0; outline: none; transition: border-color 0.2s; cursor: none;
+}
+.field input:focus { border-color: var(--acid); }
+.field input::placeholder { color: #2a2a2a; font-style: italic; }
+
+.source-tabs { display: flex; gap: 0; margin-bottom: 16px; }
+.tab {
+  flex: 1; background: transparent; border: 1px solid var(--border);
+  border-right: none; color: #333; font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 12px; cursor: none; transition: all 0.2s;
+}
+.tab:last-child { border-right: 1px solid var(--border); }
+.tab.active { background: var(--acid); color: var(--black); border-color: var(--acid); }
+.tab:hover:not(.active) { color: #888; }
+
+.how-to { padding: 14px 18px; border-left: 2px solid #1a1a1a; margin-bottom: 16px; }
+.how-to p { font-family: 'DM Mono', monospace; font-size: 10px; color: #2a2a2a; letter-spacing: 1px; line-height: 1.8; text-transform: uppercase; }
+.how-to p strong { color: #444; }
+
+textarea {
+  width: 100%; background: #060606; border: 1px solid var(--border);
+  color: #999; font-family: 'DM Mono', monospace; font-size: 11px;
+  font-weight: 300; line-height: 1.8; padding: 20px; outline: none;
+  resize: vertical; min-height: 220px; transition: border-color 0.2s; cursor: none;
+}
+textarea:focus { border-color: #333; }
+textarea::placeholder { color: #1e1e1e; }
+
+.char-count { font-family: 'DM Mono', monospace; font-size: 9px; color: #2a2a2a; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; text-align: right; }
+.char-count.good { color: #3a3a3a; }
+.char-count.great { color: var(--acid); }
+
+.run-btn {
+  width: 100%; background: var(--acid); border: none; color: var(--black);
+  font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
+  padding: 20px; cursor: none; transition: background 0.2s; margin-bottom: 2px;
+}
+.run-btn:hover { background: #d4ff1a; }
+.run-btn:disabled { background: #111; color: #222; }
+
+/* PROGRESS */
+.progress { display: none; background: var(--mid); border: 1px solid var(--border); padding: 28px 36px; margin-bottom: 2px; }
+.progress.visible { display: block; }
+.prog-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.prog-track { height: 2px; background: var(--border); }
+.prog-fill { height: 2px; background: var(--acid); width: 0%; transition: width 0.6s ease; }
+.prog-step { font-family: 'Instrument Serif', serif; font-size: 14px; color: #333; font-style: italic; margin-top: 10px; }
+
+/* RESULTS */
+.results { display: none; }
+.results.visible { display: block; }
+
+.r-header {
+  background: var(--mid); border: 1px solid var(--border); padding: 40px;
+  margin-bottom: 2px; display: flex; justify-content: space-between; align-items: flex-start;
+}
+.r-biz { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--off-white); line-height: 0.9; }
+.r-meta { font-family: 'DM Mono', monospace; font-size: 9px; color: #333; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
+.r-score-wrap { text-align: right; }
+.r-score { font-family: 'Bebas Neue', sans-serif; font-size: 88px; line-height: 0.85; }
+.r-score.pos { color: var(--acid); }
+.r-score.neu { color: #666; }
+.r-score.neg { color: var(--warm); }
+.r-score-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: #333; letter-spacing: 2px; text-transform: uppercase; }
+
+.bars {
+  background: var(--mid); border: 1px solid var(--border); border-top: none;
+  padding: 28px 40px; margin-bottom: 2px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px;
+}
+.bar-item .bar-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: #333; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.bar-track { height: 2px; background: #1a1a1a; }
+.bar-fill { height: 2px; transition: width 1s ease; }
+.bar-fill.p { background: var(--acid); }
+.bar-fill.n { background: #444; }
+.bar-fill.g { background: var(--warm); }
+.bar-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--off-white); margin-top: 6px; }
+
+.themes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+.theme-block { background: var(--mid); border: 1px solid var(--border); padding: 28px 32px; }
+.t-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--acid); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+.t-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--off-white); margin-bottom: 16px; }
+.t-list { list-style: none; }
+.t-list li { font-family: 'Instrument Serif', serif; font-size: 14px; color: #666; padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+.t-list li:last-child { border-bottom: none; }
+.dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+.dot.p { background: var(--acid); }
+.dot.g { background: var(--warm); }
+
+.verdict-block { background: var(--mid); border: 1px solid var(--border); padding: 32px; margin-bottom: 2px; }
+.v-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--acid); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.v-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--off-white); margin-bottom: 16px; }
+.v-body { font-family: 'Instrument Serif', serif; font-size: 16px; line-height: 1.85; color: #777; font-style: italic; }
+.v-body strong { color: var(--off-white); font-style: normal; }
+.v-body em { color: var(--acid); font-style: normal; }
+
+.gap-block { background: var(--black); border: 1px solid var(--acid); padding: 32px; margin-bottom: 2px; }
+.g-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--acid); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+.g-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--off-white); margin-bottom: 16px; }
+.g-body { font-family: 'Instrument Serif', serif; font-size: 15px; line-height: 1.85; color: #777; font-style: italic; }
+.g-body strong { color: var(--off-white); font-style: normal; }
+
+.footer-bar { background: var(--mid); border: 1px solid var(--border); padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+.f-note { font-family: 'DM Mono', monospace; font-size: 9px; color: #222; letter-spacing: 2px; text-transform: uppercase; }
+.export-btn { background: transparent; border: 1px solid var(--border); color: #333; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 10px 20px; cursor: none; transition: all 0.2s; }
+.export-btn:hover { border-color: var(--acid); color: var(--acid); }
+
+.reset-btn { background: transparent; border: 1px solid #1a1a1a; color: #2a2a2a; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 10px 20px; cursor: none; transition: all 0.2s; margin-right: 8px; }
+.reset-btn:hover { border-color: #333; color: #555; }
+
+@media (max-width: 700px) {
+  nav { padding: 20px 24px; }
+  main { padding: 100px 24px 60px; }
+  .panel { padding: 24px; }
+  .bars { grid-template-columns: 1fr; }
+  .themes-grid { grid-template-columns: 1fr; }
+  .r-header { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a href="https://staticagency.netlify.app" class="nav-logo">STATIC</a>
+  <div class="nav-tag">// Sentiment <span>Engine</span> · Internal</div>
+</nav>
+
+<main>
+  <div class="header">
+    <div class="eyebrow">// Static Intelligence · v2.0</div>
+    <h1 class="title">PASTE.<br><span>ANALYSE.</span><br>PUBLISH.</h1>
+    <p class="desc">Copy reviews from Google Maps, Instagram, or Reddit and paste them below. Get a <strong>publishable Static-voice sentiment breakdown</strong> in seconds.</p>
+  </div>
+
+  <div class="panel" id="input-panel">
+    <div class="panel-label">// Business</div>
+    <div class="field">
+      <label>Business Name</label>
+      <input type="text" id="biz-name" placeholder="e.g. Lakehead Beer Co." autocomplete="off">
+    </div>
+
+    <div class="panel-label" style="margin-top: 8px;">// Source</div>
+    <div class="source-tabs">
+      <button class="tab active" data-src="Google Reviews">Google</button>
+      <button class="tab" data-src="Instagram">Instagram</button>
+      <button class="tab" data-src="Reddit">Reddit</button>
+      <button class="tab" data-src="Mixed">Mixed</button>
+    </div>
+
+    <div class="how-to" id="how-to">
+      <p><strong>Google:</strong> Open Maps → find business → click Reviews → scroll to load more → Command+A to select all → Command+C to copy → paste below. Don't worry about formatting — paste it raw.</p>
+    </div>
+
+    <div class="field">
+      <label>Paste Raw Text</label>
+      <textarea id="raw-text" placeholder="Paste reviews, comments, or posts here...&#10;&#10;No formatting needed. Just select all and paste.&#10;Minimum 10 reviews recommended."></textarea>
+      <div class="char-count" id="char-count">// 0 characters — paste some text</div>
+    </div>
+  </div>
+
+  <button class="run-btn" id="run-btn">
+    <span id="btn-label">RUN ANALYSIS →</span>
+  </button>
+
+  <div class="progress" id="progress">
+    <div class="prog-label">// Analysis in progress</div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+    <div class="prog-step" id="prog-step">Reading sentiment signals...</div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="r-header">
+      <div>
+        <div class="r-biz" id="r-biz"></div>
+        <div class="r-meta" id="r-meta"></div>
+      </div>
+      <div class="r-score-wrap">
+        <div class="r-score" id="r-score"></div>
+        <div class="r-score-lbl">// Overall Sentiment</div>
+      </div>
+    </div>
+
+    <div class="bars">
+      <div class="bar-item">
+        <div class="bar-lbl">// Positive</div>
+        <div class="bar-track"><div class="bar-fill p" id="bp" style="width:0%"></div></div>
+        <div class="bar-num" id="pp">0%</div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-lbl">// Neutral</div>
+        <div class="bar-track"><div class="bar-fill n" id="bn" style="width:0%"></div></div>
+        <div class="bar-num" id="np">0%</div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-lbl">// Negative</div>
+        <div class="bar-track"><div class="bar-fill g" id="bg" style="width:0%"></div></div>
+        <div class="bar-num" id="gp">0%</div>
+      </div>
+    </div>
+
+    <div class="themes-grid">
+      <div class="theme-block">
+        <div class="t-lbl">// What people love</div>
+        <div class="t-title">Positive Themes</div>
+        <ul class="t-list" id="pos-themes"></ul>
+      </div>
+      <div class="theme-block">
+        <div class="t-lbl">// What people criticise</div>
+        <div class="t-title">Negative Themes</div>
+        <ul class="t-list" id="neg-themes"></ul>
+      </div>
+    </div>
+
+    <div class="verdict-block">
+      <div class="v-lbl">// Static's Read</div>
+      <div class="v-title">THE VERDICT</div>
+      <div class="v-body" id="r-verdict"></div>
+    </div>
+
+    <div class="gap-block">
+      <div class="g-lbl">// The Publishable Insight</div>
+      <div class="g-title">BRAND CLAIM VS. AUDIENCE REALITY</div>
+      <div class="g-body" id="r-gap"></div>
+    </div>
+
+    <div class="footer-bar">
+      <div class="f-note">// Static Sentiment Engine · staticagency.netlify.app</div>
+      <div>
+        <button class="reset-btn" id="reset-btn">New Analysis</button>
+        <button class="export-btn" id="export-btn">Export Report →</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = (e.clientX - 5) + 'px';
+  cursor.style.top = (e.clientY - 5) + 'px';
+});
+document.querySelectorAll('a, button, input, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+});
+
+// Source tabs
+let activeSource = 'Google Reviews';
+const hints = {
+  'Google Reviews': '<strong>Google:</strong> Open Maps → find business → click Reviews → scroll to load → Command+A → Command+C → paste below.',
+  'Instagram': '<strong>Instagram:</strong> Open their profile → scroll through posts → select and copy comments from each post → paste below.',
+  'Reddit': '<strong>Reddit:</strong> Search the business name on reddit.com → open relevant threads → select all text → copy → paste below.',
+  'Mixed': '<strong>Mixed:</strong> Combine sources. Paste everything together — label each section with the platform if you can.'
+};
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeSource = tab.dataset.src;
+    document.getElementById('how-to').innerHTML = `<p>${hints[activeSource]}</p>`;
+  });
+});
+
+// Char count
+document.getElementById('raw-text').addEventListener('input', function() {
+  const len = this.value.length;
+  const el = document.getElementById('char-count');
+  if (len === 0) { el.textContent = '// 0 characters — paste some text'; el.className = 'char-count'; }
+  else if (len < 500) { el.textContent = `// ${len} characters — paste more for better analysis`; el.className = 'char-count'; }
+  else if (len < 2000) { el.textContent = `// ${len} characters — good`; el.className = 'char-count good'; }
+  else { el.textContent = `// ${len} characters — great sample size`; el.className = 'char-count great'; }
+});
+
+// Progress steps
+const steps = [
+  'Reading sentiment signals...',
+  'Identifying recurring themes...',
+  'Measuring brand gap...',
+  'Writing the verdict...',
+  'Formatting for publication...'
+];
+
+// Run analysis
+document.getElementById('run-btn').addEventListener('click', async () => {
+  const biz = document.getElementById('biz-name').value.trim();
+  const text = document.getElementById('raw-text').value.trim();
+
+  if (!biz) { alert('Please enter a business name.'); return; }
+  if (text.length < 100) { alert('Please paste more text — minimum 100 characters for a meaningful analysis.'); return; }
+
+  const btn = document.getElementById('run-btn');
+  const progress = document.getElementById('progress');
+  const results = document.getElementById('results');
+
+  btn.disabled = true;
+  document.getElementById('btn-label').textContent = 'ANALYSING...';
+  progress.classList.add('visible');
+  results.classList.remove('visible');
+
+  let stepIdx = 0;
+  const stepEl = document.getElementById('prog-step');
+  const fillEl = document.getElementById('prog-fill');
+  fillEl.style.width = '10%';
+
+  const stepInterval = setInterval(() => {
+    stepIdx = (stepIdx + 1) % steps.length;
+    stepEl.textContent = steps[stepIdx];
+    const pct = Math.min(90, 10 + (stepIdx * 18));
+    fillEl.style.width = pct + '%';
+  }, 1500);
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are Static's brand intelligence engine. Analyse customer sentiment for brand strategy. Find the gap between what a brand claims and what customers actually experience. Write with Static's voice — sharp, specific, analytical, no generic advice. Always respond ONLY with valid JSON, no markdown, no preamble, no explanation outside the JSON object.`,
+        messages: [{
+          role: 'user',
+          content: `Analyse the following customer text for "${biz}". Source: ${activeSource}.
+
+TEXT:
+${text.slice(0, 8000)}
+
+Return ONLY this exact JSON structure with no other text:
+{
+  "positive_pct": number between 0-100,
+  "neutral_pct": number between 0-100,
+  "negative_pct": number between 0-100,
+  "overall_label": one of "STRONG" or "POSITIVE" or "MIXED" or "NEGATIVE" or "CRITICAL",
+  "positive_themes": ["5 specific themes as complete sentences describing what people love"],
+  "negative_themes": ["3 specific themes as complete sentences describing what people criticise"],
+  "verdict": "3-4 sentences in Static voice. Use <strong> tags around key phrases. Use <em> tags for the single most important insight.",
+  "brand_gap": "2-3 sentences identifying the gap between brand claim and audience reality. Use <strong> for emphasis.",
+  "tense_note": "One sentence noting whether positive sentiment uses present or past tense — this signals brand trajectory."
+}
+
+The three percentage numbers must add to exactly 100. Be analytically honest.`
+        }]
+      })
+    });
+
+    clearInterval(stepInterval);
+    fillEl.style.width = '95%';
+
+    const data = await response.json();
+
+    if (!data.content || !data.content[0]) {
+      throw new Error('No response from analysis engine.');
+    }
+
+    let analysis;
+    try {
+      const raw = data.content[0].text.replace(/```json|```/g, '').trim();
+      analysis = JSON.parse(raw);
+    } catch(e) {
+      throw new Error('Could not parse analysis. Try again.');
+    }
+
+    fillEl.style.width = '100%';
+
+    // Populate results
+    document.getElementById('r-biz').textContent = biz.toUpperCase();
+    document.getElementById('r-meta').textContent = `// ${activeSource} · ${new Date().toLocaleDateString('en-CA', {month:'long', year:'numeric'})}`;
+
+    const scoreEl = document.getElementById('r-score');
+    scoreEl.textContent = analysis.overall_label;
+    scoreEl.className = 'r-score';
+    if (analysis.positive_pct >= 70) scoreEl.classList.add('pos');
+    else if (analysis.negative_pct >= 35) scoreEl.classList.add('neg');
+    else scoreEl.classList.add('neu');
+
+    setTimeout(() => {
+      document.getElementById('bp').style.width = analysis.positive_pct + '%';
+      document.getElementById('bn').style.width = analysis.neutral_pct + '%';
+      document.getElementById('bg').style.width = analysis.negative_pct + '%';
+    }, 200);
+    document.getElementById('pp').textContent = analysis.positive_pct + '%';
+    document.getElementById('np').textContent = analysis.neutral_pct + '%';
+    document.getElementById('gp').textContent = analysis.negative_pct + '%';
+
+    const posEl = document.getElementById('pos-themes');
+    posEl.innerHTML = (analysis.positive_themes || []).map(t => `<li><span class="dot p"></span>${t}</li>`).join('');
+
+    const negEl = document.getElementById('neg-themes');
+    negEl.innerHTML = (analysis.negative_themes || []).map(t => `<li><span class="dot g"></span>${t}</li>`).join('');
+
+    document.getElementById('r-verdict').innerHTML = analysis.verdict + (analysis.tense_note ? `<br><br><em>${analysis.tense_note}</em>` : '');
+    document.getElementById('r-gap').innerHTML = analysis.brand_gap;
+
+    setTimeout(() => {
+      progress.classList.remove('visible');
+      results.classList.add('visible');
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+
+  } catch(err) {
+    clearInterval(stepInterval);
+    progress.classList.remove('visible');
+    alert('Analysis failed: ' + err.message);
+  }
+
+  btn.disabled = false;
+  document.getElementById('btn-label').textContent = 'RUN ANALYSIS →';
+});
+
+// Reset
+document.getElementById('reset-btn').addEventListener('click', () => {
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('biz-name').value = '';
+  document.getElementById('raw-text').value = '';
+  document.getElementById('char-count').textContent = '// 0 characters — paste some text';
+  document.getElementById('char-count').className = 'char-count';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Export
+document.getElementById('export-btn').addEventListener('click', () => {
+  const biz = document.getElementById('r-biz').textContent;
+  const pos = document.getElementById('pp').textContent;
+  const neu = document.getElementById('np').textContent;
+  const neg = document.getElementById('gp').textContent;
+  const verdict = document.getElementById('r-verdict').innerText;
+  const gap = document.getElementById('r-gap').innerText;
+  const posThemes = Array.from(document.querySelectorAll('#pos-themes li')).map(l => '  ' + l.textContent.trim()).join('\n');
+  const negThemes = Array.from(document.querySelectorAll('#neg-themes li')).map(l => '  ' + l.textContent.trim()).join('\n');
+
+  const txt = `STATIC SENTIMENT ANALYSIS
+${biz}
+Generated: ${new Date().toLocaleDateString('en-CA', {month:'long', day:'numeric', year:'numeric'})}
+Source: ${activeSource}
+
+SENTIMENT SCORES
+  Positive: ${pos}
+  Neutral:  ${neu}
+  Negative: ${neg}
+
+POSITIVE THEMES
+${posThemes}
+
+NEGATIVE THEMES
+${negThemes}
+
+THE VERDICT
+${verdict}
+
+BRAND GAP
+${gap}
+
+---
+Static — Brand Strategy · staticagency.netlify.app`;
+
+  const blob = new Blob([txt], {type: 'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `static-sentiment-${biz.toLowerCase().replace(/\s+/g, '-')}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>
