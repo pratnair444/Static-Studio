@@ -1,33 +1,42 @@
+const https = require('https');
+
 exports.handler = async function(event) {
   const params = event.queryStringParameters || {};
-  const apiKey = params.api_key;
 
-  if (!apiKey) {
+  if (!params.api_key) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: 'Missing api_key parameter' })
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Missing api_key' })
     };
   }
 
-  const url = new URL('https://serpapi.com/search.json');
-  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  const queryString = Object.entries(params)
+    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+    .join('&');
 
-  try {
-    const response = await fetch(url.toString());
-    const data = await response.json();
+  const url = `https://serpapi.com/search.json?${queryString}`;
 
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    };
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: err.message })
-    };
-  }
+  return new Promise((resolve) => {
+    https.get(url, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        resolve({
+          statusCode: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+          },
+          body: data
+        });
+      });
+    }).on('error', (err) => {
+      resolve({
+        statusCode: 500,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ error: err.message })
+      });
+    });
+  });
 };
