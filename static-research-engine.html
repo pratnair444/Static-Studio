@@ -451,7 +451,7 @@ async function fetchGoogleReviews(bizName, location, mapsUrl) {
   });
 
   try {
-    const searchRes = await fetch(`https://serpapi.com/search?${searchParams.toString()}`);
+    const searchRes = await fetch(`/.netlify/functions/serp-proxy?${searchParams.toString()}`);
 
     if (!searchRes.ok) {
       throw new Error(`SerpAPI returned ${searchRes.status}. Check your API key.`);
@@ -489,7 +489,7 @@ async function fetchGoogleReviews(bizName, location, mapsUrl) {
       sort_by: 'newestFirst'
     });
 
-    const reviewRes = await fetch(`https://serpapi.com/search?${reviewParams.toString()}`);
+    const reviewRes = await fetch(`/.netlify/functions/serp-proxy?${reviewParams.toString()}`);
     const reviewData = await reviewRes.json();
 
     if (reviewData.error) {
