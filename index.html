@@ -20,8 +20,8 @@
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--off-white); font-family: 'Instrument Serif', serif; overflow-x: hidden; cursor: none; }
   *, *::before, *::after, a, button, input, select, textarea { cursor: none !important; }
-  .cursor { position: fixed; width: 10px; height: 10px; background: #4fc3f7; border-radius: 50%; pointer-events: none; z-index: 99999; left: -20px; top: -20px; transition: width 0.15s ease, height 0.15s ease, border-radius 0.15s ease; }
-  .cursor.expand { width: 32px; height: 32px; background: transparent; border: 2px solid #4fc3f7; border-radius: 50%; }
+  .cursor { position: fixed; width: 10px; height: 10px; background: #4fc3f7; border-radius: 50%; pointer-events: none; z-index: 999999; left: -20px; top: -20px; }
+  .cursor.expand { width: 32px; height: 32px; background: transparent; border: 2px solid #4fc3f7; border-radius: 50%; margin-left: -11px; margin-top: -11px; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9990; opacity: 0.5; }
 
   /* NAV */
@@ -547,8 +547,8 @@
   </div>
   <div class="cta-right">
     <a href="https://calendly.com/pratnair44/30min" target="_blank" class="cta-btn cta-btn-primary">Book Free Audit →</a>
-    <a href="/cdn-cgi/l/email-protection#62121003160c030b10565622050f030b0e4c010d0f" class="cta-btn cta-btn-secondary">Just Say Hello</a>
-    <div class="cta-note"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdcdcfdcc9d3dcd4cf8989fddad0dcd4d193ded2d0">[email&#160;protected]</a></div>
+    <a href="mailto:pratnair44@gmail.com" class="cta-btn cta-btn-secondary">Just Say Hello</a>
+    <div class="cta-note">pratnair44@gmail.com</div>
   </div>
 </div>
 
@@ -565,7 +565,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="https://www.linkedin.com/in/pratyushrameshnair/" target="_blank">LinkedIn</a></li>
-      <li><a href="/cdn-cgi/l/email-protection#473735263329262e35737307202a262e2b6924282a">Contact</a></li>
+      <li><a href="mailto:pratnair44@gmail.com">Contact</a></li>
     </ul>
   </div>
   <div class="footer-bottom">
@@ -574,7 +574,7 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ============================================================
 // CASE STUDIES
 // ============================================================
@@ -1008,4 +1008,16 @@ window.addEventListener('scroll', function() {
 // Static hero lines
 const bg = document.getElementById('staticBg');
 for (var i = 0; i < 20; i++) {
-  var l = document.createEl
+  var l = document.createElement('div');
+  l.className = 'static-line';
+  l.style.top = Math.random()*100+'%';
+  l.style.setProperty('--dur',(2+Math.random()*4)+'s');
+  l.style.setProperty('--shift',(Math.random()*20-10)+'px');
+  l.style.animationDelay = (Math.random()*4)+'s';
+  bg.appendChild(l);
+}
+
+}); // end load
+</script>
+</body>
+</html>
